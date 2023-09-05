@@ -8,24 +8,28 @@ pip install pipenv
 Para activar el environment:
 
 ```
+cd backend
 source $(pipenv --venv)/bin/activate
 ```
 
 o
 
 ```
+cd backend
 pipenv shell
 ```
 
 Cuando se instale una nueva dependencia, correr el siguiente comando para actualizar el Pipfile:
 
 ```
+cd backend
 pipenv install //dependencia
 ```
 
 Al hacer un pull, actualiza las dependencias:
 
 ```
+cd backend
 pipenv install
 ```
 
