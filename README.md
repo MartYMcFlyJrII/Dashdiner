@@ -12,13 +12,6 @@ cd backend
 source $(pipenv --venv)/bin/activate
 ```
 
-o
-
-```
-cd backend
-pipenv shell
-```
-
 Cuando se instale una nueva dependencia, correr el siguiente comando para actualizar el Pipfile:
 
 ```
