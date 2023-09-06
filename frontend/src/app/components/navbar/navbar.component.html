@@ -1,13 +1,18 @@
-<div class="px-16 py-5 flex justify-between	">
-  <img cImg src="assets/Logo.svg" height="40" />
-  <app-searchbar />
+<div class="px-2 md:px-16 py-5 flex justify-between	">
+  <img cImg src="assets/Logo.svg" class="h-[40px] md:h-[50px]" (click)="redirect('')" />
+  <app-searchbar class="grow" />
   <div class="flex justify-around items-center gap-3">
 
-
-    <p class="text-orange-600 font-medium	text-xs flex items-center gap-1"> <mat-icon
-        color="primary">account_circle</mat-icon>Ingresar</p>
+    <button mat-button (click)="redirect('login')"
+      class="text-orange-600 font-medium	text-xs flex items-center gap-1 hidden md:flex"> <mat-icon
+        color="primary">account_circle</mat-icon>Ingresar</button>
+    <div class="flex md:hidden">
+      <mat-icon color="primary">account_circle</mat-icon>
+    </div>
     <mat-divider [vertical]="true" class="h-1/2"></mat-divider>
-    <mat-icon class="text-gray-600">shopping_cart</mat-icon>
+    <button mat-button class="text-gray-600" (click)="redirect('carrito')">
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
   </div>
 
 </div>
