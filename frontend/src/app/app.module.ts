@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { SearchbarComponent } from './components/searchbar/searchbar.component';
-import { GridComponent } from './components/grid/grid.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BuscarComponent } from './pages/buscar/buscar.component';
@@ -24,12 +23,16 @@ import { AdministradorComponent } from './pages/administrador/administrador.comp
 import { ProductosComponent } from './pages/administrador/productos/productos.component';
 import { AgregarProductoComponent } from './pages/administrador/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './pages/administrador/editar-producto/editar-producto.component';
+import { HomeComponent } from './pages/home/home.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { GridRestauranteComponent } from './components/grid-restaurante/grid-restaurante.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SearchbarComponent,
-    GridComponent,
     BuscarComponent,
     LoginComponent,
     RegistroClienteComponent,
@@ -41,6 +44,8 @@ import { EditarProductoComponent } from './pages/administrador/editar-producto/e
     ProductosComponent,
     AgregarProductoComponent,
     EditarProductoComponent,
+    HomeComponent,
+    GridRestauranteComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,8 @@ import { EditarProductoComponent } from './pages/administrador/editar-producto/e
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatButtonModule,
+    MatCardModule,
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent],

@@ -7,6 +7,7 @@ import { MenuComponent } from './pages/menu/menu.component';
 import { ProductoComponent } from './pages/producto/producto.component';
 import { RegistroClienteComponent } from './pages/registro-cliente/registro-cliente.component';
 import { RegistroRestauranteComponent } from './pages/registro-restaurante/registro-restaurante.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: 'buscar/:texto', component: BuscarComponent },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'producto/:id', component: ProductoComponent },
   { path: 'carrito', component: CarritoComponent },
   { path: 'login', component: LoginComponent },
-
+  { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/' },
 ];
 
