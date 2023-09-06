@@ -12,6 +12,6 @@ export class AppComponent {
 
   constructor(private service: GlobalService) {}
   ngOnInit() {
-    this.service.get().subscribe((result: any) => (this.texto = result));
+    //this.service.get().subscribe((result: any) => (this.texto = result));
   }
 }
