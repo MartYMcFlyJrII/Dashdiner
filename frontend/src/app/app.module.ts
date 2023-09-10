@@ -26,7 +26,7 @@ import { EditarProductoComponent } from './pages/administrador/editar-producto/e
 import { HomeComponent } from './pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { GridRestauranteComponent } from './components/grid-restaurante/grid-restaurante.component';
+import { GridComponent } from './components/grid/grid.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { GridRestauranteComponent } from './components/grid-restaurante/grid-res
     AgregarProductoComponent,
     EditarProductoComponent,
     HomeComponent,
-    GridRestauranteComponent,
+    GridComponent,
   ],
   imports: [
     BrowserModule,
