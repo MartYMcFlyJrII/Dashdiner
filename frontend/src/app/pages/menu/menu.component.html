@@ -1,3 +1,36 @@
 <app-navbar></app-navbar>
 
-<p>menu works!</p>
+<div class="flex flex-col lg:flex-row lg:py-8 gap-4 xl:gap-16 md:px-4 xl:px-12 ">
+  <div
+    class="grid lg:grid-flow-row grid-cols-3	px-4 lg:grid-cols-none gap-2 lg:gap-8 lg:justify-items-center auto-rows-max	 min-w-fit	">
+    <img class="border border-gray-300 rounded-full h-[150px] lg:h-[200px]"
+      src="https://static.vecteezy.com/system/resources/previews/012/003/573/original/pizzeria-emblem-on-blackboard-pizza-logo-template-emblem-for-cafe-restaurant-or-food-delivery-service-vector.jpg" />
+
+    <div class="flex flex-col col-span-2	lg:col-span-1 justify-self-end	self-center	">
+      <button mat-flat-button class="flex items-top font-semibold text-sm text-[#0D2C54] p-2"><mat-icon
+          class="text-sm">favorite_border</mat-icon>Agregar a
+        favoritos
+      </button>
+      <p>1234 Country Club Ave</p> <!-- direccion -->
+      <p>NC 123456, London, UK</p>
+      <p>+0123 456 7891</p><!-- celular -->
+    </div>
+    <ul class="px-4 w-full text-start lg:flex-col flex justify-around lg:justify-start col-span-3	lg:col-span-1	">
+      <li class="my-2 border-b lg:border-0">Categoria 1</li>
+      <mat-divider></mat-divider>
+      <li class="my-2 border-b lg:border-0">Categoria 2</li>
+      <mat-divider></mat-divider>
+      <li class="my-2 border-b lg:border-0">Categoria 3</li>
+      <mat-divider></mat-divider>
+      <li class="my-2 border-b lg:border-0">Categoria 4</li>
+      <mat-divider></mat-divider>
+    </ul>
+  </div>
+
+  <div class="w-full">
+    <div class="bg-black h-[250px] mx-4"></div>
+    <app-grid [producto]="true"></app-grid>
+
+  </div>
+
+</div>
