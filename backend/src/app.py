@@ -13,7 +13,7 @@ def home():
 
 def main():
     db.init_app(app)
-
+    app.run()
     with app.app_context():
         db.create_all()
 
