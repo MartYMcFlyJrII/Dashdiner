@@ -12,7 +12,7 @@ cd backend
 source $(pipenv --venv)/bin/activate
 ```
 
-Cuando se instale una nueva dependencia, correr el siguiente comando para actualizar el Pipfile:
+Al instalar una nueva dependencia, correr el siguiente comando para que se instale la dependencia y se actualice el Pipfile:
 
 ```
 cd backend
@@ -31,8 +31,7 @@ Correr el backend:
 
 ```
 cd backend
-export FLASK_APP=./src/main.py
-flask run -h 0.0.0.0
+python app.py
 ```
 
 #Frontend
