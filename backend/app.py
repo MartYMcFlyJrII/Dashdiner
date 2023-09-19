@@ -13,9 +13,13 @@ def home():
 
 def main():
     db.init_app(app)
-    app.run()
+    
+    # antes de correr la aplicacion, se debe crear la base de datos
+    # correr el comando en mysql:
+    # create database dashdiner;
     with app.app_context():
         db.create_all()
+    app.run()
 
 
 if __name__ == "__main__":
