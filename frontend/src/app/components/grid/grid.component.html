@@ -21,6 +21,10 @@
               class="py-4 px-8 text-sm rounded-full text-white mt-2" color="primary">Ver
               menú</button>
           </mat-card-actions>
+          <mat-card-actions *ngIf="producto">
+            <button mat-raised-button (click)="seleccionar(p)" class="py-4 px-8 text-sm rounded-full text-white mt-2"
+              color="primary">Seleccionar</button>
+          </mat-card-actions>
         </mat-card-content>
 
       </div>

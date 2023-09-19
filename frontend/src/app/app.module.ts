@@ -27,7 +27,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { GridComponent } from './components/grid/grid.component';
-
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MensajeComponent } from './components/mensaje/mensaje.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,8 @@ import { GridComponent } from './components/grid/grid.component';
     EditarProductoComponent,
     HomeComponent,
     GridComponent,
+    DialogComponent,
+    MensajeComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,7 @@ import { GridComponent } from './components/grid/grid.component';
     MatFormFieldModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent],
