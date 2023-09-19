@@ -6,6 +6,8 @@ db = SQLAlchemy()
 class TipoUsuario(enum.Enum):
     admin = 'admin'
     cliente = 'cliente'
+    cocina = 'cocina'
+    
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(100), unique=True, nullable=False)
@@ -41,6 +43,7 @@ class Producto(db.Model):
     imagen = db.Column(db.String(100))
     precio = db.Column(db.Double,nullable=False)
     estado = db.Column(db.Boolean,nullable=False)
+    promocion = db.Column(db.Boolean,nullable=False)
     
 class Opcion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
