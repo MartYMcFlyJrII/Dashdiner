@@ -1,5 +1,5 @@
-<div class="flex py-8 px-12">
-  <div class="flex flex-col gap-3 py-8">
+<div class="flex py-8 gap-8">
+  <div class="flex flex-col gap-3 py-8 pl-12">
     <img src="{{producto.imagen}}" class="max-w-[350px] rounded-xl" />
     <div class="flex justify-between">
       <h1 class="font-bold text-2xl">{{producto.nombre}}</h1>
@@ -8,8 +8,37 @@
     <p class="text-xl">{{producto.descripcion}}</p>
 
   </div>
-  <div class="flex flex-col max-h-[540px] w-full overflow-y-auto px-10 gap-6 ">
+  <div class="flex flex-col max-h-[540px] w-full overflow-y-auto px-10 gap-6 mr-2">
+    <div class="m-2">
+      <p class="font-semibold text-2xl">Elige el tamaño:</p>
+      <div class="shadow-lg rounded-sm p-8 flex flex-col gap-6">
+        <div class="flex justify-between ">
+          <p class="text-xl">Mediana</p>
+          <div class="flex gap-8 justify-between">
+            <p class="text-sm text-start">+ $0.00</p>
+            <input checked type="radio" value="" name="default-radio"
+              class="w-4 h-4 text-blue-600 bg-white border-gray-300 ">
 
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-xl">Grande</p>
+          <div class="flex gap-8 justify-between">
+            <p class="text-sm">+ $20.00</p>
+            <input type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-white border-gray-300 ">
+
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-xl">Familiar</p>
+          <div class="flex gap-8 justify-between">
+            <p class="text-sm">+ $30.00</p>
+            <input type="radio" value="" name="default-radio" class="w-4 h-4 text-blue-600 bg-white border-gray-300 ">
+
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="m-2">
       <p class="font-semibold text-2xl">Elige el tamaño:</p>
