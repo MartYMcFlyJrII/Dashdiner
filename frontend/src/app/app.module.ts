@@ -20,7 +20,6 @@ import { CarritoComponent } from './pages/carrito/carrito.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { ProductoComponent } from './pages/producto/producto.component';
 import { AdministradorComponent } from './pages/administrador/administrador.component';
-import { ProductosComponent } from './pages/administrador/productos/productos.component';
 import { AgregarProductoComponent } from './pages/administrador/agregar-producto/agregar-producto.component';
 import { EditarProductoComponent } from './pages/administrador/editar-producto/editar-producto.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -30,6 +29,13 @@ import { GridComponent } from './components/grid/grid.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MensajeComponent } from './components/mensaje/mensaje.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { LogoComponent } from './components/logo/logo.component';
+import { FormComponent } from './components/form/form.component';
+import { AdminMenuComponent } from './pages/administrador/admin-menu/admin-menu.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,13 +49,16 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
     MenuComponent,
     ProductoComponent,
     AdministradorComponent,
-    ProductosComponent,
     AgregarProductoComponent,
     EditarProductoComponent,
     HomeComponent,
     GridComponent,
     DialogComponent,
     MensajeComponent,
+    SidenavComponent,
+    LogoComponent,
+    FormComponent,
+    AdminMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +73,9 @@ import { MensajeComponent } from './components/mensaje/mensaje.component';
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent],

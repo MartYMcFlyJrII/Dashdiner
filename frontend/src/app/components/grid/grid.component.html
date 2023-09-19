@@ -2,28 +2,34 @@
   <div
     class="grid grid-cols-2 place-content-center	 md:grid-cols-3  gap-4 lg:gap-x-12 lg:gap-y-14 gap-y-8 grid-flow-row px-4 ">
     <div class="flex flex-1 " *ngFor="let item of items">
-      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center">
+      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center"
+        [ngClass]="{'bg-gray-200': !p.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === p.id}"
+        (click)="!editable && !restaurante && seleccionar(p)">
         <mat-card-header>
-          <img mat-card-image class="rounded-t-3xl min-w-full" src="{{item.imagen}}" />
+          <img mat-card-image class="rounded-t-3xl min-w-full" src="{{item.imagen}}"
+            [ngClass]="{'filter grayscale': !p.estado}" />
 
         </mat-card-header>
 
         <mat-card-content class="p-5 w-full">
           <div class="flex justify-between ">
             <mat-card-title class="font-bold text-lg block">{{item.titulo}} </mat-card-title>
-            <mat-card-title *ngIf="producto" class="font-bold text-lg block">${{item.precio.toFixed(2)}}
+            <mat-card-title *ngIf="producto || editable" class="font-bold text-lg block">${{item.precio.toFixed(2)}}
             </mat-card-title>
           </div>
-          <p *ngIf="producto" class="text-sm text-gray-400">{{item.descripcion}}</p>
+          <p *ngIf="producto || editable" class="text-sm text-gray-400">{{item.descripcion}}</p>
 
-          <mat-card-actions *ngIf="!producto">
+          <mat-card-actions *ngIf="restaurante">
             <button mat-raised-button (click)="redirect('ver-menu/1')"
               class="py-4 px-8 text-sm rounded-full text-white mt-2" color="primary">Ver
               menú</button>
           </mat-card-actions>
-          <mat-card-actions *ngIf="producto">
-            <button mat-raised-button (click)="seleccionar(p)" class="py-4 px-8 text-sm rounded-full text-white mt-2"
-              color="primary">Seleccionar</button>
+          <mat-card-actions *ngIf="editable" class="flex justify-around mt-4">
+            <button mat-stroked-button (click)="cambiarEstado(p)" class="py-4  text-sm rounded-lg min-w-[120px]"
+              color="primary" [ngClass]="{'text-gray-600':!p.estado}">{{p.estado ? 'Desactivar' :
+              'Activar'}}</button>
+            <button mat-stroked-button (click)="editarProducto(p)" class="py-4  text-sm rounded-lg" color="primary"
+              [ngClass]="{'text-gray-600':!p.estado}">Editar</button>
           </mat-card-actions>
         </mat-card-content>
 

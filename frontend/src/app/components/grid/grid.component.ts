@@ -11,10 +11,17 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./grid.component.css'],
 })
 export class GridComponent {
+  @Input() restaurante?: boolean;
+  @Input() editable?: boolean;
   @Input() producto?: boolean;
+  @Output() editar = new EventEmitter();
+  @Output() cambiados = new EventEmitter<Producto>();
+  @Input() productos?: Producto[];
   items: any[] = [];
   mensaje: any;
   @Output() seleccionado = new EventEmitter<Producto>();
+  itemSeleccionado?: Producto;
+
   constructor(private router: Router, private dialog: MatDialog) {}
   p: Producto = new Producto(
     1,
@@ -39,6 +46,13 @@ export class GridComponent {
   }
 
   seleccionar(prod: Producto) {
+    this.openModal(prod, DialogComponent);
+  }
+
+  desactivarProducto(prod: Producto) {
+    this.openModal(prod, DialogComponent);
+  }
+  editarProducto(prod: Producto) {
     this.openModal(prod, DialogComponent);
   }
 
@@ -69,4 +83,10 @@ export class GridComponent {
   //   this.restSeleccionado = restaurante;
   //   this.seleccionado.emit(restaurante);
   // }
+
+  cambiarEstado(prod: Producto) {
+    prod.estado = !prod.estado;
+
+    this.cambiados.emit(prod);
+  }
 }
