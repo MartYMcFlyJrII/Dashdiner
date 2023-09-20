@@ -17,32 +17,7 @@ export class AdminMenuComponent {
   mensaje: any;
   grid: boolean = true;
   table: boolean = false;
-  columnasDisplay = [
-    {
-      key: 'id',
-      header: 'Id',
-    },
-    {
-      key: 'fechaAgregado',
-      header: 'Fecha agregado',
-    },
-    {
-      key: 'nombre',
-      header: 'Nombre',
-    },
-    {
-      key: 'serie',
-      header: 'Número de serie',
-    },
-    {
-      key: 'estatus',
-      header: 'Estatus',
-    },
-    {
-      key: 'editar',
-      header: 'Editar',
-    },
-  ];
+
   constructor(
     private service: GlobalService,
     private buildr: FormBuilder,
@@ -71,11 +46,22 @@ export class AdminMenuComponent {
         code: code,
         formGroup: this.buildr.group({
           id: this.buildr.control(0),
+          id_restaurante: this.buildr.control(0),
+          id_categoria: [null, Validators.required],
           nombre: [null, Validators.required],
-          serie: [null, Validators.required],
-          estatus: this.buildr.control(false),
+          descripcion: [null, Validators.required],
+          precio: [null, Validators.required],
+          imagen: [null, Validators.required],
+          estado: this.buildr.control(false),
         }),
-        formColumns: ['Nombre', 'Número de serie'],
+        formColumns: [
+          'Categoria',
+          'Nombre',
+          'Descripción',
+          'Precio',
+          'Imagen',
+          'Estado',
+        ],
       },
     });
     _popup.afterClosed().subscribe((item) => {

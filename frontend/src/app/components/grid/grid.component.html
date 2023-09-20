@@ -1,8 +1,8 @@
 <div class="pt-8">
   <div
-    class="grid grid-cols-2 place-content-center	 md:grid-cols-3  gap-4 lg:gap-x-12 lg:gap-y-14 gap-y-8 grid-flow-row px-4 ">
+    class="grid grid-cols-1 sm:grid-cols-2 place-content-center	 md:grid-cols-3  gap-4 lg:gap-x-12 lg:gap-y-14 gap-y-8 grid-flow-row lg:px-4 ">
     <div class="flex flex-1 " *ngFor="let item of items">
-      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center"
+      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white"
         [ngClass]="{'bg-gray-200': !p.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === p.id}"
         (click)="!editable && !restaurante && seleccionar(p)">
         <mat-card-header>

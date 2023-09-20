@@ -1,6 +1,8 @@
 <form [formGroup]="this.datosInput.formGroup" (ngSubmit)="guardar()">
 
   <h1 mat-dialog-title class="">{{datosInput.title}}</h1>
+  <img [src]="url" class="max-w-[350px] rounded-xl" />
+  <input type="file" (change)="onSelectFile($event)" />
   <div mat-dialog-content class="flex flex-col w-full gap-4">
     <app-mensaje *ngIf="mensaje" (visible)="mensaje = null" tipo="{{mensaje.tipo}}"
       contenido="{{mensaje.contenido}}"></app-mensaje>
@@ -10,13 +12,13 @@
         <input required="true" matInput formControlName="nombre">
       </mat-form-field>
       <div class="flex flex-col justify-center items-center place-self-start">
-        <mat-label>Estatus</mat-label>
-        <mat-slide-toggle class="text-xl" formControlName="estatus"></mat-slide-toggle>
+        <mat-label>Estado</mat-label>
+        <mat-slide-toggle class="text-xl" formControlName="estado"></mat-slide-toggle>
       </div>
     </div>
     <mat-form-field>
-      <mat-label>Número de serie</mat-label>
-      <input required="true" matInput formControlName="serie">
+      <mat-label>Precio</mat-label>
+      <input required="true" matInput formControlName="precio">
     </mat-form-field>
 
   </div>

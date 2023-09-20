@@ -53,12 +53,12 @@ export class GridComponent {
     this.openModal(prod, DialogComponent);
   }
   editarProducto(prod: Producto) {
-    this.openModal(prod, DialogComponent);
+    this.editar.emit(prod);
   }
 
   openModal(prod: Producto, component: any) {
     var _popup = this.dialog.open(component, {
-      width: '70%',
+      width: '80%',
       enterAnimationDuration: '500ms',
       exitAnimationDuration: '500ms',
       data: {

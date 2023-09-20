@@ -16,6 +16,7 @@ export class FormComponent {
     tipo: 'success',
     contenido: 'Los cambios se han cambiado de manera exitosa.',
   };
+  url = '/assets/placeholder.png';
   constructor(
     @Inject(MAT_DIALOG_DATA) public datos: any,
     private ref: MatDialogRef<DialogComponent>,
@@ -28,6 +29,16 @@ export class FormComponent {
     }
   }
 
+  onSelectFile(e: any) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+        console.log(this.url);
+      };
+    }
+  }
   recibirInformacion(code: number) {
     // this.service.getProyector(code).subscribe((item) => {
     //   this.proyector = item;
