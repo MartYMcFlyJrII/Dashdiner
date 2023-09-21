@@ -1,1 +1,77 @@
-<p>login works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.component.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>Sign In</title>
+</head>
+<body style="margin: 0; background-color: rgb(255, 250, 247);">
+    <div class="sign-in-container">
+        <div class="sign-in-contents">
+            <div class="dd-logo-container">
+                <img src="/src/app/pages/login/icons/logo.png" class="dd-logo">
+            </div>
+            <div class="sign-in-legend-container">
+                <div class="sign-in-legend-title">Sign In</div>
+                <div class="sign-in-legend-subtitle">Sign in to stay connected.</div>
+            </div>
+            <div class="sign-in-email-container">
+                <form>
+                    <label for="email">Email</label>
+                    <input type="email" id="email">
+                </form>
+            </div>
+            <div class="sign-in-password-container">
+                <form>
+                    <label for="pass">Password</label>
+                    <input type="password" id="password">
+                </form>
+            </div>
+            <div class="sign-in-footer">
+                <div class="sign-in-rembemberme">
+                    <form>
+                        <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe" id="rememberMeLabel">Remember me</label>
+                    </form>
+                </div>
+                <div class="sign-in-forgot-pass">
+                    <form>
+                        Forgot Password
+                    </form>
+                </div>
+            </div>
+            <div class="sign-in-button-container">
+                <button class="sign-in-button">Sign In</button>
+            </div>
+            <div class="sign-in-other-acc-container">
+                <div class="sign-in-other-acc-title">or sign in with other accounts?</div>
+                <div class="sign-in-other-acc-some">
+                    <div class="sign-in-google-container">
+                        <img src="/src/app/pages/login/images/google-icon.webp" class="sign-in-google">
+                    </div>
+                    <div class="sign-in-facebook-container">
+                        <img src="/src/app/pages/login/images/facebook-icon.png" class="sign-in-facebook">
+                    </div>
+                    <div class="sign-in-instagram-container">
+                        <img src="/src/app/pages/login/images/instagram-icon.webp" class="sign-in-instagram">
+                    </div>
+                    <div class="sign-in-linkedin-container">
+                        <img src="/src/app/pages/login/images/linkedin-icon.webp" class="sign-in-linkedin">
+                    </div>
+                </div>
+            </div>
+            <div class="sign-in-create-acc-container">
+                <div class="sign-in-noacc-title">Don't have an account?</div>
+                <div class="sign-in-sign-up">Click here to sign up.</div>
+            </div>
+        </div>
+        <div class="promo-image-container">
+            <img src="/src/app/pages/login/icons/promo-image.png" class="promo-image">
+            <img src="/src/app/pages/login/icons/elipse.png" class="promo-image-elipse">
+        </div>
+    </div>
+</body>
+</html>
