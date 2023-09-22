@@ -19,33 +19,36 @@
                 <div class="sign-in-legend-title">Sign In</div>
                 <div class="sign-in-legend-subtitle">Sign in to stay connected.</div>
             </div>
-            <div class="sign-in-email-container">
+            <form (ngSubmit)="login()" #loginForm="ngForm">
+                <div class="sign-in-email-container">
                 <form>
                     <label for="email">Email</label>
-                    <input type="email" id="email">
+                    <input type="email" id="email" [(ngModel)]="correo">
                 </form>
-            </div>
-            <div class="sign-in-password-container">
-                <form>
-                    <label for="pass">Password</label>
-                    <input type="password" id="password">
-                </form>
-            </div>
-            <div class="sign-in-footer">
-                <div class="sign-in-rembemberme">
+                </div>
+                <div class="sign-in-password-container">
                     <form>
-                        <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe" id="rememberMeLabel">Remember me</label>
+                        <label for="pass">Password</label>
+                        <input type="password" id="password" [(ngModel)]="password">
                     </form>
                 </div>
-                <div class="sign-in-forgot-pass">
-                    <form>
-                        Forgot Password
-                    </form>
+                <div class="sign-in-footer">
+                    <div class="sign-in-rembemberme">
+                        <form>
+                            <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe" id="rememberMeLabel">Remember me</label>
+                        </form>
+                    </div>
+                    <div class="sign-in-forgot-pass">
+                        <form>
+                            Forgot Password
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="sign-in-button-container">
-                <button class="sign-in-button">Sign In</button>
-            </div>
+                <div class="sign-in-button-container">
+                    <button class="sign-in-button">Sign In</button>
+                </div>
+            </form>
+            
             <div class="sign-in-other-acc-container">
                 <div class="sign-in-other-acc-title">or sign in with other accounts?</div>
                 <div class="sign-in-other-acc-some">
