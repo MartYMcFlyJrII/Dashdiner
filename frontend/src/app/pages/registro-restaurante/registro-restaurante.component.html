@@ -1,1 +1,92 @@
-<p>registro-restaurante works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registro-restaurante.component.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>Registro Restaurante</title>
+</head>
+<body style="margin: 0; background-color: rgb(255, 250, 247); height: 750px;">
+    <div class="sign-up-container">
+        <div class="sign-up-contents">
+            <div class="dd-logo-container">
+                <img src="/src/app/pages/login/icons/logo.png" class="dd-logo">
+            </div>
+            <div class="sign-up-legend-container">
+                <div class="sign-up-legend-title">Registra tu restaurante</div>
+                <div class="sign-up-legend-subtitle">Ingresa los datos del responsable</div>
+            </div>
+            <div class="sign-up-fields-container">
+                <div class="sign-up-fields-firstRow">
+                    <div class="sign-up-firstName-container">
+                        <form>
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName">
+                        </form>
+                    </div>
+                    <div class="sign-up-lastName-container">
+                        <form>
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName">
+                        </form>
+                    </div>
+                </div>
+                <div class="sign-up-fields-secondRow">
+                    <div class="sign-up-email-container">
+                        <form>
+                            <label for="pass">Email</label>
+                            <input type="email" id="email">
+                        </form>
+                    </div>
+                    <div class="sign-up-phone-container">
+                        <form>
+                            <label for="pass">Phone No.</label>
+                            <input type="tel" id="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                        </form>
+                    </div>
+                </div>
+                <div class="sign-up-fields-thirdRow">
+                    <div class="sign-up-password-container">
+                        <form>
+                            <label for="password">Password</label>
+                            <input type="password" id="password">
+                        </form>
+                    </div>
+                    <div class="sign-up-confpassword-container">
+                        <form>
+                            <label for="confpassword">Confirm Password</label>
+                            <input type="password" id="confpassword">
+                        </form>
+                    </div>
+                </div>
+                <div class="sign-up-fields-fourthRow">
+                    <div class="sign-up-rfc-container">
+                        <form>
+                            <label for="rfc">RFC</label>
+                            <input type="text" id="rfc">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="sign-up-footer">
+                <div class="sign-up-rembemberme">
+                    <form>
+                        <input type="checkbox" value="lsAgree" id="termsUse"> <label for="termsUse" id="termsUseLabel">I agree with the terms of use</label>
+                    </form>
+                </div>
+            </div>
+            <div class="sign-up-next-button-container">
+                <button class="sign-up-next-button">Siguiente</button>
+            </div>
+        </div>
+        <div class="promo-image-container">
+            <img src="/src/app/pages/registro-cliente/images/food-group.png" class="promo-image-group">
+            <img src="/src/app/pages/registro-cliente/images/salad.png" class="promo-image-salad">
+            <img src="/src/app/pages/registro-cliente/images/big-elipse.png" class="promo-image-elipse">
+        </div>
+    </div>
+</body>
+</html>
