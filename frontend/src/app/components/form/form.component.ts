@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalService } from 'src/app/services/global.service';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -9,6 +10,65 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent {
+  producto: any;
+  form: any;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public datos: any,
+    private formBuilder: FormBuilder,
+    private ref: MatDialogRef<DialogComponent>,
+    private service: GlobalService
+  ) {}
+
+  ngOnInit(): void {
+    this.producto = this.datos.formGroup;
+    if (this.datosInput.code > 0) {
+      this.recibirInformacion(this.datosInput.code);
+    }
+    this.form = this.formBuilder.group({
+      id: this.producto.id,
+      id_restaurante: this.producto.id_restaurante,
+      id_categoria: this.producto.id_categoria,
+      nombre: this.producto.nombre,
+      descripcion: this.producto.descripcion,
+      precio: this.producto.precio,
+      imagen: this.producto.imagen,
+      estado: this.producto.estado,
+      opciones: this.buildOpciones(this.producto.opciones),
+    });
+  }
+
+  get productos(): FormArray {
+    return this.form.get('productos') as FormArray;
+  }
+
+  buildOpciones(productos: { phoneNo: string; emailAddr: string }[] = []) {
+    return this.formBuilder.array(
+      productos.map((producto) => this.formBuilder.group(producto))
+    );
+  }
+
+  addproductoField() {
+    this.productos.push(
+      this.formBuilder.group({ phoneNo: null, emailAddr: null })
+    );
+  }
+
+  removeproductoField(index: number): void {
+    if (this.productos.length > 1) this.productos.removeAt(index);
+    else this.productos.patchValue([{ phoneNo: null, emailAddr: null }]);
+  }
+
+  submit(value: any): void {
+    console.log(value);
+  }
+
+  reset(): void {
+    this.form.reset();
+    this.productos.clear();
+    this.addproductoField();
+  }
+
   datosInput: any;
   proyector: any;
   mensaje: any;
@@ -17,17 +77,11 @@ export class FormComponent {
     contenido: 'Los cambios se han cambiado de manera exitosa.',
   };
   url = '/assets/placeholder.png';
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public datos: any,
-    private ref: MatDialogRef<DialogComponent>,
-    private service: GlobalService
-  ) {}
-  ngOnInit(): void {
-    this.datosInput = this.datos;
-    if (this.datosInput.code > 0) {
-      this.recibirInformacion(this.datosInput.code);
-    }
-  }
+  // constructor(
+  //   @Inject(MAT_DIALOG_DATA) public datos: any,
+  //   private ref: MatDialogRef<DialogComponent>,
+  //   private service: GlobalService
+  // ) {}
 
   onSelectFile(e: any) {
     if (e.target.files) {
@@ -51,6 +105,8 @@ export class FormComponent {
     //   });
     // });
   }
+
+  agregarOpcion() {}
 
   closeModal(success = false) {
     var msg = success ? this.closemessage : '';

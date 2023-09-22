@@ -36,6 +36,11 @@ import { MatListModule } from '@angular/material/list';
 import { LogoComponent } from './components/logo/logo.component';
 import { FormComponent } from './components/form/form.component';
 import { AdminMenuComponent } from './pages/administrador/admin-menu/admin-menu.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { OpcionFormComponent } from './components/opcion-form/opcion-form.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,6 +64,7 @@ import { AdminMenuComponent } from './pages/administrador/admin-menu/admin-menu.
     LogoComponent,
     FormComponent,
     AdminMenuComponent,
+    OpcionFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,6 +82,10 @@ import { AdminMenuComponent } from './pages/administrador/admin-menu/admin-menu.
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatButtonToggleModule,
+    MatSelectModule,
   ],
   providers: [GlobalService],
   bootstrap: [AppComponent],

@@ -53,6 +53,14 @@ export class AdminMenuComponent {
           precio: [null, Validators.required],
           imagen: [null, Validators.required],
           estado: this.buildr.control(false),
+          opciones: [
+            {
+              id: 0,
+              titulo: '',
+              multiple: false,
+              selecciones: [{ id: 0, nombre: '', precio: 10.0, estado: false }],
+            },
+          ],
         }),
         formColumns: [
           'Categoria',

@@ -1,27 +1,44 @@
-<form [formGroup]="this.datosInput.formGroup" (ngSubmit)="guardar()">
-
-  <h1 mat-dialog-title class="">{{datosInput.title}}</h1>
-  <img [src]="url" class="max-w-[350px] rounded-xl" />
-  <input type="file" (change)="onSelectFile($event)" />
-  <div mat-dialog-content class="flex flex-col w-full gap-4">
-    <app-mensaje *ngIf="mensaje" (visible)="mensaje = null" tipo="{{mensaje.tipo}}"
-      contenido="{{mensaje.contenido}}"></app-mensaje>
-    <div class="grid grid-cols-7 md:grid-cols-10 lg:grid-cols-12 gap-4">
-      <mat-form-field class="col-span-5 md:col-span-8 lg:col-span-11">
-        <mat-label>Nombre</mat-label>
-        <input required="true" matInput formControlName="nombre">
-      </mat-form-field>
-      <div class="flex flex-col justify-center items-center place-self-start">
-        <mat-label>Estado</mat-label>
-        <mat-slide-toggle class="text-xl" formControlName="estado"></mat-slide-toggle>
-      </div>
-    </div>
-    <mat-form-field>
-      <mat-label>Precio</mat-label>
-      <input required="true" matInput formControlName="precio">
-    </mat-form-field>
+<form [formGroup]="this.datosInput.formGroup" (ngSubmit)="guardar()"
+  class="py-8 px-4 xl:px-12 max-h-[80vh] overflow-y-auto">
+  <div class="flex justify-between">
+    <h1 class="text-2xl font-bold text-orange-600">{{datosInput.title}}</h1>
+    <button mat-stroked-button (click)="agregarOpcion()" color="primary"
+      class="text-sm bg-white rounded-lg py-5 flex items-center min-w-fit ">Agregar
+      opción<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>
 
   </div>
+  <app-mensaje *ngIf="mensaje" (visible)="mensaje = null" tipo="{{mensaje.tipo}}"
+    contenido="{{mensaje.contenido}}"></app-mensaje>
+  <div class="flex flex-col lg:flex-row gap-8 ">
+    <div class="flex flex-col ">
+      <img [src]="url" class="max-w-[350px] rounded-xl" />
+      <label for="files"
+        class="cursor-pointer	self-center my-4 bg-white hover:bg-orange-50 border border-gray-300 text-orange-600 py-2 px-4 rounded-xl max-w-fit">Seleccionar
+        imagen</label>
+      <input id=files type="file" (change)="onSelectFile($event)" class="hidden" placeholder="Seleccione la imagen" />
+      <mat-form-field class="w-full">
+        <mat-label>Nombre de producto</mat-label>
+        <input required="true" matInput placeholder="" formControlName="nombre">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Precio</mat-label>
+        <input required="true" matInput placeholder="" formControlName="precio">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Descripcion</mat-label>
+        <textarea required="true" matInput placeholder="" formControlName="descripcion"></textarea>
+      </mat-form-field>
+      <div class="flex items-center">
+        <mat-label class="text-gray-700">Estado</mat-label>
+        <mat-slide-toggle formControlName="estado" color="primary"></mat-slide-toggle>
+
+      </div>
+    </div>
+    <div class="flex flex-col lg:max-h-[540px] w-full lg:overflow-y-auto gap-6 ">
+      <app-opcion-form></app-opcion-form>
+    </div>
+  </div>
+
   <div mat-dialog-actions class="flex gap-4 justify-end mr-4">
     <button mat-raised-button type="submit" color="primary">Confirmar</button>
     <a (click)="closeModal()" mat-stroked-button color="primary">Cerrar</a>

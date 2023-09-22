@@ -1,0 +1,57 @@
+<div class="shadow-lg m-2 px-2 py-6">
+  <div class="flex gap-5 ">
+    <button mat-icon-button><mat-icon class="text-orange-600 ">remove_circle_outline</mat-icon></button>
+
+    <mat-form-field class="w-full ">
+      <mat-label>Nombre de opción</mat-label>
+      <input required="true" matInput placeholder="" formControlName="nombre">
+    </mat-form-field>
+  </div>
+
+
+  <div class="flex justify-between gap-5 items-start">
+
+    <button mat-stroked-button color="primary" class="py-7 rounded-lg"><mat-icon
+        iconPositionEnd>add_circle_outline</mat-icon>Agregar
+      selección</button>
+
+    <mat-form-field>
+      <mat-label>Tipo de selección</mat-label>
+      <mat-select>
+        <mat-option value="Múltiple">
+          Múltiple
+        </mat-option>
+        <mat-option value="Única">
+          Única
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+
+  <div class="flex gap-2 justify-between items-center">
+    <button mat-icon-button><mat-icon class="text-orange-600 ">remove_circle_outline</mat-icon></button>
+    <mat-form-field class="min-w-fit -mb-[1.25em]">
+      <mat-label>Nombre de selección</mat-label>
+      <input required="true" matInput placeholder="" formControlName="seleccion">
+    </mat-form-field>
+    <mat-form-field class="max-w-fit -mb-[1.25em]">
+      <mat-label>Precio extra</mat-label>
+      <input required="true" matInput placeholder="" formControlName="precio">
+    </mat-form-field>
+
+  </div>
+  <div class="flex gap-2 justify-between items-center">
+    <button mat-icon-button><mat-icon class="text-orange-600 ">remove_circle_outline</mat-icon></button>
+    <mat-form-field class="min-w-fit -mb-[1.25em]">
+      <mat-label>Nombre de selección</mat-label>
+      <input required="true" matInput placeholder="" formControlName="seleccion">
+    </mat-form-field>
+    <mat-form-field class="max-w-fit -mb-[1.25em]">
+      <mat-label>Precio extra</mat-label>
+      <input required="true" matInput placeholder="" formControlName="precio">
+    </mat-form-field>
+
+  </div>
+</div>
