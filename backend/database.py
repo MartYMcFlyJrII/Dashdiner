@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import enum
 from flask_sqlalchemy import SQLAlchemy
 
@@ -7,7 +8,7 @@ class TipoUsuario(enum.Enum):
     admin = 'admin'
     cliente = 'cliente'
     cocina = 'cocina'
-    
+@dataclass
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_usuario = db.Column(db.String(100), unique=True, nullable=False)
@@ -19,28 +20,31 @@ class Usuario(db.Model):
     rfc = db.Column(db.String(100),nullable=True)
     tipo = db.Column(db.Enum(TipoUsuario),nullable=False)
 
+@dataclass
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_usuario = db.Column(db.Integer, db.ForeignKey('usuario.id'))
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(100),nullable=False)
-    logo = db.Column(db.String(100))
+    logo = db.Column(db.String(500))
     horario = db.Column(db.String(100),nullable=False)
+    celular = db.Column(db.String(100),nullable=False)
     direccion = db.Column(db.String(100),nullable=False)
+    
 
-
+@dataclass
 class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_restaurante = db.Column(db.Integer, db.ForeignKey('restaurante.id'),nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
-
+@dataclass
 class Producto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_restaurante = db.Column(db.Integer, db.ForeignKey('restaurante.id'),nullable=False)
     id_categoria = db.Column(db.Integer,db.ForeignKey('categoria.id'), nullable=False)
     nombre = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(100),nullable=False)
-    imagen = db.Column(db.String(100))
+    imagen = db.Column(db.String(500))
     precio = db.Column(db.Double,nullable=False)
     estado = db.Column(db.Boolean,nullable=False)
     promocion = db.Column(db.Boolean,nullable=False)
