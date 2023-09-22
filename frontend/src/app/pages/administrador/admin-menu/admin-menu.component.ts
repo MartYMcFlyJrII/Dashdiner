@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Params } from '@angular/router';
 import { FormComponent } from 'src/app/components/form/form.component';
 import { Producto } from 'src/app/models/producto';
 import { GlobalService } from 'src/app/services/global.service';
@@ -15,14 +16,21 @@ export class AdminMenuComponent {
   productos: Producto[] = [];
   prodCambiados: Producto[] = [];
   mensaje: any;
+  id_administrador: number = 0;
   grid: boolean = true;
   table: boolean = false;
 
   constructor(
     private service: GlobalService,
     private buildr: FormBuilder,
+    private route: ActivatedRoute,
     private dialog: MatDialog //public loaderService: LoaderService
   ) {}
+
+  ngOnInit() {
+    this.id_administrador = parseInt(this.route.snapshot.parent?.params['id']);
+    this.loadItems();
+  }
 
   agregarProducto() {
     this.openModal(0, 'Agregar Producto', FormComponent);
@@ -98,12 +106,8 @@ export class AdminMenuComponent {
   }
 
   loadItems() {
-    // this.service
-    //   .getProyectores()
-    //   .subscribe((result: Producto[]) => (this.proyectores = result));
-  }
-
-  ngOnInit(): void {
-    this.loadItems();
+    this.service
+      .getProductos(this.id_administrador)
+      .subscribe((result: Producto[]) => (this.productos = result));
   }
 }

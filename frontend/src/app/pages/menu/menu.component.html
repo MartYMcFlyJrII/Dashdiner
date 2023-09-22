@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="flex flex-col lg:flex-row lg:py-8 gap-4 xl:gap-16 md:px-4 xl:px-12 ">
+<div class="flex flex-col lg:flex-row lg:py-8 gap-4 xl:gap-16 md:px-4 xl:px-12 py-6 ">
   <h1 class="font-bold text-2xl border-b lg:hidden mx-4">{{restaurante.nombre}}</h1>
   <div
     class="grid lg:grid-flow-row grid-cols-3	px-4 lg:grid-cols-none gap-2 lg:gap-8 lg:justify-items-center auto-rows-max	 min-w-fit	">
@@ -34,7 +34,7 @@
   </div>
 
   <div class="w-full">
-    <div class="bg-black h-[250px] mx-4"></div>
+    <app-carousel [promociones]="promociones"></app-carousel>
     <app-grid [producto]="true" [items]="productos"></app-grid>
 
   </div>

@@ -78,5 +78,9 @@ export class GridComponent {
     prod.estado = !prod.estado;
 
     this.cambiados.emit(prod);
+
+    // this.service.guardarProducto(prod).subscribe((response) => {
+    //   this.mensaje = response;
+    // });
   }
 }

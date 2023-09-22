@@ -4,11 +4,11 @@
     [ngClass]="{'xl:grid-cols-3':producto || editable, 'xl:grid-cols-4': restaurante }">
     <div class="flex flex-1 " *ngFor="let item of items">
       <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white"
-        [ngClass]="{'bg-gray-200': !p.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === p.id}"
-        (click)="!editable && !restaurante && seleccionar(p)">
+        [ngClass]="{'bg-gray-200': !item.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === item.id}"
+        (click)="!editable && !restaurante && seleccionar(item)">
         <mat-card-header class="w-full">
-          <img *ngIf="producto" mat-card-image class="rounded-t-3xl min-w-full" src="{{item.imagen}}"
-            [ngClass]="{'filter grayscale': !p.estado}" />
+          <img *ngIf="producto || editable" mat-card-image class="rounded-t-3xl w-full h-[250px] object-fill "
+            src="{{item.imagen}}" [ngClass]="{'filter grayscale': !item.estado}" />
           <img *ngIf="restaurante" mat-card-image class="object-fill rounded-t-3xl  h-[250px] w-full 	"
             src="{{item.logo}}" />
         </mat-card-header>
@@ -27,11 +27,11 @@
               menú</a>
           </mat-card-actions>
           <mat-card-actions *ngIf="editable" class="flex justify-around mt-4">
-            <button mat-stroked-button (click)="cambiarEstado(p)" class="py-4  text-sm rounded-lg min-w-[120px]"
-              color="primary" [ngClass]="{'text-gray-600':!p.estado}">{{p.estado ? 'Desactivar' :
+            <button mat-stroked-button (click)="cambiarEstado(item)" class="py-4  text-sm rounded-lg min-w-[120px]"
+              color="primary" [ngClass]="{'text-gray-600':!item.estado}">{{item.estado ? 'Desactivar' :
               'Activar'}}</button>
-            <button mat-stroked-button (click)="editarProducto(p)" class="py-4  text-sm rounded-lg" color="primary"
-              [ngClass]="{'text-gray-600':!p.estado}">Editar</button>
+            <button mat-stroked-button (click)="editarProducto(item)" class="py-4  text-sm rounded-lg" color="primary"
+              [ngClass]="{'text-gray-600':!item.estado}">Editar</button>
           </mat-card-actions>
         </mat-card-content>
 

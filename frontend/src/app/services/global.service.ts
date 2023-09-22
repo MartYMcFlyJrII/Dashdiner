@@ -16,6 +16,17 @@ export class GlobalService {
   public getAllRestaurantes(): Observable<Restaurante[]> {
     return this.http.get<Restaurante[]>(`${API_URL}/restaurantes`);
   }
+  public getPromociones(id_restaurante: number): Observable<Producto[]> {
+    return this.http.get<Producto[]>(
+      `${API_URL}/promociones/${id_restaurante}`
+    );
+  }
+
+  public getProductos(id_administrador: number): Observable<Producto[]> {
+    return this.http.get<Producto[]>(
+      `${API_URL}/productos/${id_administrador}`
+    );
+  }
 
   public getMenu(id_restaurante: number): Observable<Producto[]> {
     return this.http.get<Producto[]>(`${API_URL}/menu/${id_restaurante}`);

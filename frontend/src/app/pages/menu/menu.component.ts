@@ -16,6 +16,7 @@ export class MenuComponent {
   categorias: Categoria[] = [];
   restaurante: Restaurante = new Restaurante();
   categoria_seleccionada: Categoria = new Categoria();
+  promociones: Producto[] = [];
   constructor(private route: ActivatedRoute, private service: GlobalService) {}
 
   ngOnInit() {
@@ -44,5 +45,9 @@ export class MenuComponent {
     this.service
       .getCategorias(this.id_restaurante)
       .subscribe((result: Categoria[]) => (this.categorias = result));
+
+    this.service
+      .getPromociones(this.id_restaurante)
+      .subscribe((result: Producto[]) => (this.promociones = result));
   }
 }

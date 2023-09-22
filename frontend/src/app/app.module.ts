@@ -41,6 +41,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { OpcionFormComponent } from './components/opcion-form/opcion-form.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselComponent } from './components/carousel/carousel.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,7 @@ import { MatSelectModule } from '@angular/material/select';
     FormComponent,
     AdminMenuComponent,
     OpcionFormComponent,
+    CarouselComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatSlideToggleModule,
     MatButtonToggleModule,
     MatSelectModule,
+    NgbCarouselModule,
   ],
+
   providers: [GlobalService],
   bootstrap: [AppComponent],
 })

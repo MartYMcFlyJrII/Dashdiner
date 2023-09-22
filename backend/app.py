@@ -38,6 +38,15 @@ def get_menu(id_restaurante):
         menu.append(prod)
     return jsonify(menu)
 
+@app.route('/promociones/<int:id_restaurante>', methods=['GET'])
+def get_promociones(id_restaurante):
+    productos = db.session.execute(db.select(Producto).where(Producto.id_restaurante == id_restaurante,Producto.promocion == True)).all()
+    menu = []
+    for p in productos:
+        prod = convertir_a_dict(p[0])
+        menu.append(prod)
+    return jsonify(menu)
+
 @app.route('/menu/<int:id_restaurante>/<int:id_categoria>', methods=['GET'])
 def get_menu_por_cateogria(id_restaurante,id_categoria):
     productos = db.session.execute(db.select(Producto).where(Producto.id_restaurante == id_restaurante,Producto.id_categoria==id_categoria)).all()
@@ -62,15 +71,17 @@ def get_categoria_by_id(id):
     categoria = convertir_a_dict(categoria)
     return jsonify(categoria)   
 # GET producto
-@app.route('/productos', methods=['GET'])
-def get_all_producto():
-    productos = db.session.execute(db.select(Producto)).all()
+@app.route('/productos/<int:id_administrador>', methods=['GET'])
+def get_all_producto(id_administrador):
+    restaurante = db.session.execute(db.select(Restaurante).where(Restaurante.id_usuario == id_administrador)).first()
+    restaurante= convertir_a_dict(restaurante[0])
+    productos = db.session.execute(db.select(Producto).where(Producto.id_restaurante == restaurante['id'])).all()
     lista_productos = []
     for p in productos:
         producto = convertir_a_dict(p[0])
         lista_productos.append(producto)
         
-    return jsonify({'productos':lista_productos})
+    return jsonify(lista_productos)
 
 # GET producto by id
 @app.route('/producto/<int:id>', methods=['GET'])
@@ -103,7 +114,7 @@ def main():
         # categoria = Categoria(id_restaurante=1, nombre='Categoria 2')
         # db.session.add(categoria)
         # db.session.commit()
-        # producto = Producto(id_restaurante=1, id_categoria=1, nombre="Pepperoni", descripcion="Pizza de queso y pepperoni", precio=10.0, estado=True, promocion=False, imagen='https://placeralplato.com/files/2016/01/Pizza-con-pepperoni-640x480.jpg')    
+        # producto = Producto(id_restaurante=1, id_categoria=2, nombre="Mexicana", descripcion="Pizza de chorizo, tocino y jalapeño", precio=10.0, estado=True, promocion=True, imagen='https://mandolina.co/wp-content/uploads/2023/07/pizza-mexciana.png')    
         # db.session.add(producto)
         # db.session.commit()
 
