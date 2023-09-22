@@ -12,4 +12,11 @@ export class GlobalService {
   public get(): Observable<any> {
     return this.http.get(`${API_URL}/`);
   }
+
+  public login(correo: string, password: string): Observable<any> {
+    const body = { correo: correo, password: password };
+
+    // Realiza una solicitud HTTP POST al servidor con el objeto JSON
+    return this.http.post<any>(`${API_URL}/login`, body);
+  }
 }
