@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: 'buscar/:texto', component: BuscarComponent },
   { path: 'registro-cliente', component: RegistroClienteComponent },
   { path: 'registro-restaurante', component: RegistroRestauranteComponent },
-  { path: 'ver-menu/:id', component: MenuComponent },
+  {
+    path: 'ver-menu/:id',
+    component: MenuComponent,
+  },
   { path: 'carrito', component: CarritoComponent },
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },

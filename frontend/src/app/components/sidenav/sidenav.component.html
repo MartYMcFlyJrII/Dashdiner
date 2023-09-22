@@ -1,7 +1,7 @@
 <mat-sidenav-container>
   <mat-sidenav #drawer fixedInViewport="true" [attr.role]="isMobileLayout ? 'dialog' : 'navigation'"
     [mode]="isMobileLayout ? 'over' : 'side'" [opened]="!isMobileLayout" class="mat-elevation-z7"
-    [ngClass]="isExpanded ? 'w-[300px]' : 'w-[80px]'">
+    [ngClass]="isExpanded ? 'w-[240px]' : 'w-[80px]'">
 
     <mat-toolbar class="bg-white flex justify-between	 items-center my-4 px-2 w-full mx-4 lg:mx-0">
 
@@ -13,7 +13,7 @@
         <a *ngIf="isExpanded" href="/" class="text-orange-600 font-semibold ">DashDiner</a>
       </div>
 
-      <button class="text-orange-600 flex items-center" (click)="isExpanded = !isExpanded"
+      <button class="text-orange-600 flex items-center " (click)="isExpanded = !isExpanded"
         [class.is-flipped]="isExpanded" *ngIf="!isMobileLayout">
         <mat-icon icon>chevron_right</mat-icon>
       </button>
@@ -28,11 +28,20 @@
 
 
       </mat-list-item>
+
+      <mat-list-item class="absolute bottom-0" (click)="closeSideNav()">
+        <mat-icon class="mr-6 align-middle">logout</mat-icon>
+        <span class="align-middle	">Cerrar sesión</span>
+
+
+      </mat-list-item>
+
+
     </mat-nav-list>
 
   </mat-sidenav>
   <mat-sidenav-content
-    [ngClass]="{'ml-0':isMobileLayout,'ml-[300px]':isExpanded && !isMobileLayout, 'ml-[80px]': !isExpanded && !isMobileLayout}">
+    [ngClass]="{'ml-0':isMobileLayout,'ml-[240px]':isExpanded && !isMobileLayout, 'ml-[80px]': !isExpanded && !isMobileLayout}">
     <mat-toolbar *ngIf="isMobileLayout" class="mat-elevation-z7" color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isMobileLayout">

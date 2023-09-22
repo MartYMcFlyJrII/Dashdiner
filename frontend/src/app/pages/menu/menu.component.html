@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
 <div class="flex flex-col lg:flex-row lg:py-8 gap-4 xl:gap-16 md:px-4 xl:px-12 ">
-  <h1 class="font-bold text-2xl border-b lg:hidden mx-4">Pizzeria</h1>
+  <h1 class="font-bold text-2xl border-b lg:hidden mx-4">{{restaurante.nombre}}</h1>
   <div
     class="grid lg:grid-flow-row grid-cols-3	px-4 lg:grid-cols-none gap-2 lg:gap-8 lg:justify-items-center auto-rows-max	 min-w-fit	">
     <div>
@@ -9,7 +9,7 @@
         src="https://static.vecteezy.com/system/resources/previews/012/003/573/original/pizzeria-emblem-on-blackboard-pizza-logo-template-emblem-for-cafe-restaurant-or-food-delivery-service-vector.jpg" />
 
 
-      <h1 class="font-bold text-2xl hidden lg:block text-center my-2">Pizzeria</h1>
+      <h1 class="font-bold text-2xl hidden lg:block text-center my-2">{{restaurante.nombre}}</h1>
     </div>
 
 
@@ -18,25 +18,24 @@
           class="text-sm">favorite_border</mat-icon>Agregar a
         favoritos
       </button>
-      <p>1234 Country Club Ave</p> <!-- direccion -->
-      <p>NC 123456, London, UK</p>
-      <p>+0123 456 7891</p><!-- celular -->
+      <p>{{restaurante.direccion}}</p> <!-- direccion -->
+      <p>{{restaurante.celular}}</p>
+      <p>{{restaurante.horario}}</p><!-- celular -->
     </div>
     <ul class="px-4 w-full text-start lg:flex-col flex justify-around lg:justify-start col-span-3	lg:col-span-1	">
-      <li class="my-2 border-b lg:border-0">Categoria 1</li>
-      <mat-divider></mat-divider>
-      <li class="my-2 border-b lg:border-0">Categoria 2</li>
-      <mat-divider></mat-divider>
-      <li class="my-2 border-b lg:border-0">Categoria 3</li>
-      <mat-divider></mat-divider>
-      <li class="my-2 border-b lg:border-0">Categoria 4</li>
-      <mat-divider></mat-divider>
+      <a class="hover:bg-orange-50 transition-all ease-in-out	duration-300	" *ngFor="let c of categorias"
+        [ngClass]="{'bg-orange-50':c == categoria_seleccionada}" (click)="actualizarProductos(c.id,c)">
+        <li class="my-2 mx-4 border-0 ">
+          {{c.nombre}}</li>
+        <mat-divider [ngClass]="{'border-t-orange-600':c == categoria_seleccionada}"></mat-divider>
+      </a>
+
     </ul>
   </div>
 
   <div class="w-full">
     <div class="bg-black h-[250px] mx-4"></div>
-    <app-grid [producto]="true"></app-grid>
+    <app-grid [producto]="true" [items]="productos"></app-grid>
 
   </div>
 

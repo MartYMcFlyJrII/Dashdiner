@@ -7,9 +7,10 @@ import { Component, ViewChild } from '@angular/core';
 export class SidenavComponent {
   isExpanded = true;
   fillerNav = [
-    { name: 'Menú', route: 'menu', icon: 'list_alt' },
-
-    { name: 'Asignaciones', route: 'asignaciones', icon: 'view_agenda' },
+    { name: 'Dashbord', route: 'dashboard', icon: 'dashboard' },
+    { name: 'Menú', route: 'menu', icon: 'fastfood' },
+    { name: 'Órdenes', route: 'ordenes', icon: 'edit_note' },
+    { name: 'Mi Cuenta', route: 'cuenta', icon: 'account_circle' },
   ];
   @ViewChild('drawer') drawer: any;
   public selectedItem: string = '';

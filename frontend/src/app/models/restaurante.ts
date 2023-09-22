@@ -6,4 +6,5 @@ export class Restaurante {
   direccion: string = '';
   horario: string = '';
   logo: string = '';
+  celular: string = '';
 }

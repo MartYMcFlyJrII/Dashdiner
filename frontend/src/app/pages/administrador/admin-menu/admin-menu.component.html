@@ -22,7 +22,7 @@
 
 
     <app-grid *ngIf="grid" [editable]="true" (editar)="editarProducto($event)" (cambiados)="agregarCambio($event)"
-      [productos]="productos"></app-grid>
+      [items]="productos"></app-grid>
 
 
     <!-- <div *ngIf="loaderService.isLoading | async" class="flex w-full h-[72vh] justify-center items-center">

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Producto } from 'src/app/models/producto';
 import { DialogComponent } from '../dialog/dialog.component';
+import { Restaurante } from 'src/app/models/restaurante';
 
 @Component({
   selector: 'app-grid',
@@ -16,8 +17,7 @@ export class GridComponent {
   @Input() producto?: boolean;
   @Output() editar = new EventEmitter();
   @Output() cambiados = new EventEmitter<Producto>();
-  @Input() productos?: Producto[];
-  items: any[] = [];
+  @Input() items: any[] = [];
   mensaje: any;
   @Output() seleccionado = new EventEmitter<Producto>();
   itemSeleccionado?: Producto;
@@ -33,17 +33,7 @@ export class GridComponent {
     true,
     'https://placeralplato.com/files/2016/01/Pizza-con-pepperoni-640x480.jpg'
   );
-  ngOnInit() {
-    for (var i = 0; i < 6; i++) {
-      this.items.push({
-        titulo: 'Pizzeria',
-        descripcion: 'Pizzas recien hechas',
-        precio: 100.0,
-        imagen:
-          'https://media-cdn.tripadvisor.com/media/photo-s/19/76/f0/71/pizze-varie-di-gianni.jpg',
-      });
-    }
-  }
+  ngOnInit() {}
 
   seleccionar(prod: Producto) {
     this.openModal(prod, DialogComponent);

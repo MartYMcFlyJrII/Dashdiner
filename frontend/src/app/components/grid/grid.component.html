@@ -1,28 +1,30 @@
 <div class="pt-8">
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 place-content-center	 md:grid-cols-3  gap-4 lg:gap-x-12 lg:gap-y-14 gap-y-8 grid-flow-row lg:px-4 ">
+    class="grid grid-cols-1 sm:grid-cols-2 place-content-center	 lg:grid-cols-3   gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8 grid-flow-row px-16 md:px-4 "
+    [ngClass]="{'xl:grid-cols-3':producto || editable, 'xl:grid-cols-4': restaurante }">
     <div class="flex flex-1 " *ngFor="let item of items">
       <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white"
         [ngClass]="{'bg-gray-200': !p.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === p.id}"
         (click)="!editable && !restaurante && seleccionar(p)">
-        <mat-card-header>
-          <img mat-card-image class="rounded-t-3xl min-w-full" src="{{item.imagen}}"
+        <mat-card-header class="w-full">
+          <img *ngIf="producto" mat-card-image class="rounded-t-3xl min-w-full" src="{{item.imagen}}"
             [ngClass]="{'filter grayscale': !p.estado}" />
-
+          <img *ngIf="restaurante" mat-card-image class="object-fill rounded-t-3xl  h-[250px] w-full 	"
+            src="{{item.logo}}" />
         </mat-card-header>
 
         <mat-card-content class="p-5 w-full">
           <div class="flex justify-between ">
-            <mat-card-title class="font-bold text-lg block">{{item.titulo}} </mat-card-title>
+            <mat-card-title class="font-bold text-lg block">{{item.nombre}} </mat-card-title>
             <mat-card-title *ngIf="producto || editable" class="font-bold text-lg block">${{item.precio.toFixed(2)}}
             </mat-card-title>
           </div>
           <p *ngIf="producto || editable" class="text-sm text-gray-400">{{item.descripcion}}</p>
 
           <mat-card-actions *ngIf="restaurante">
-            <button mat-raised-button (click)="redirect('ver-menu/1')"
+            <a mat-raised-button [routerLink]="'ver-menu/'+item.id"
               class="py-4 px-8 text-sm rounded-full text-white mt-2" color="primary">Ver
-              menú</button>
+              menú</a>
           </mat-card-actions>
           <mat-card-actions *ngIf="editable" class="flex justify-around mt-4">
             <button mat-stroked-button (click)="cambiarEstado(p)" class="py-4  text-sm rounded-lg min-w-[120px]"
