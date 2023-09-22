@@ -1,1 +1,105 @@
-<p>registro-cliente works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="registro-cliente.component.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <title>Sign Up</title>
+</head>
+<body style="margin: 0; background-color: rgb(255, 250, 247); height: 750px;">
+    <div class="sign-up-container">
+        <div class="sign-up-contents">
+            <div class="dd-logo-container">
+                <img src="/src/app/pages/login/icons/logo.png" class="dd-logo">
+            </div>
+            <div class="sign-up-legend-container">
+                <div class="sign-up-legend-title">Sign Up</div>
+                <div class="sign-up-legend-subtitle">Create your DashDiner account!</div>
+            </div>
+            <div class="sign-up-fields-container">
+                <div class="sign-up-fields-firstRow">
+                    <div class="sign-up-firstName-container">
+                        <form>
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName">
+                        </form>
+                    </div>
+                    <div class="sign-up-lastName-container">
+                        <form>
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName">
+                        </form>
+                    </div>
+                </div>
+                <div class="sign-up-fields-secondRow">
+                    <div class="sign-up-email-container">
+                        <form>
+                            <label for="pass">Email</label>
+                            <input type="email" id="email">
+                        </form>
+                    </div>
+                    <div class="sign-up-phone-container">
+                        <form>
+                            <label for="pass">Phone No.</label>
+                            <input type="tel" id="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                        </form>
+                    </div>
+                </div>
+                <div class="sign-up-fields-thirdRow">
+                    <div class="sign-up-password-container">
+                        <form>
+                            <label for="password">Password</label>
+                            <input type="password" id="password">
+                        </form>
+                    </div>
+                    <div class="sign-up-confpassword-container">
+                        <form>
+                            <label for="confpassword">Confirm Password</label>
+                            <input type="password" id="confpassword">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="sign-up-footer">
+                <div class="sign-up-rembemberme">
+                    <form>
+                        <input type="checkbox" value="lsAgree" id="termsUse"> <label for="termsUse" id="termsUseLabel">I agree with the terms of use</label>
+                    </form>
+                </div>
+            </div>
+            <div class="sign-up-button-container">
+                <button class="sign-up-button">Sign up</button>
+            </div>
+            <div class="sign-up-other-acc-container">
+                <div class="sign-up-other-acc-title">or sign up with other accounts?</div>
+                <div class="sign-up-other-acc-some">
+                    <div class="sign-up-google-container">
+                        <img src="/src/app/pages/login/images/google-icon.webp" class="sign-up-google">
+                    </div>
+                    <div class="sign-up-facebook-container">
+                        <img src="/src/app/pages/login/images/facebook-icon.png" class="sign-up-facebook">
+                    </div>
+                    <div class="sign-up-instagram-container">
+                        <img src="/src/app/pages/login/images/instagram-icon.webp" class="sign-up-instagram">
+                    </div>
+                    <div class="sign-up-linkedin-container">
+                        <img src="/src/app/pages/login/images/linkedin-icon.webp" class="sign-up-linkedin">
+                    </div>
+                </div>
+            </div>
+            <div class="sign-up-have-acc-container">
+                <div class="sign-up-acc-title">Already have an account?</div>
+                <div class="sign-up-sign-in">Sign in!</div>
+            </div>
+        </div>
+        <div class="promo-image-container">
+            <img src="/src/app/pages/registro-cliente/images/food-group.png" class="promo-image-group">
+            <img src="/src/app/pages/registro-cliente/images/salad.png" class="promo-image-salad">
+            <img src="/src/app/pages/registro-cliente/images/big-elipse.png" class="promo-image-elipse">
+        </div>
+    </div>
+</body>
+</html>
