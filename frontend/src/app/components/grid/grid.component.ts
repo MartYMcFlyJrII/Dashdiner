@@ -23,16 +23,6 @@ export class GridComponent {
   itemSeleccionado?: Producto;
 
   constructor(private router: Router, private dialog: MatDialog) {}
-  p: Producto = new Producto(
-    1,
-    1,
-    1,
-    'Pizza pepperoni',
-    'Pizza con queso y pepperonni',
-    120.5,
-    true,
-    'https://placeralplato.com/files/2016/01/Pizza-con-pepperoni-640x480.jpg'
-  );
   ngOnInit() {}
 
   seleccionar(prod: Producto) {

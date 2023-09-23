@@ -16,10 +16,14 @@ export class MenuComponent {
   categorias: Categoria[] = [];
   restaurante: Restaurante = new Restaurante();
   categoria_seleccionada: Categoria = new Categoria();
+  categoria_inicial: Categoria = new Categoria();
   promociones: Producto[] = [];
   constructor(private route: ActivatedRoute, private service: GlobalService) {}
 
   ngOnInit() {
+    this.categoria_inicial.nombre = 'Todos los productos';
+    this.categoria_inicial.id = 0;
+    this.categoria_inicial = this.categoria_inicial;
     this.id_restaurante = parseInt(
       this.route.snapshot.paramMap.get('id') || '0'
     );
@@ -27,16 +31,25 @@ export class MenuComponent {
   }
 
   actualizarProductos(id_categoria: any, categoria: Categoria) {
-    this.service
-      .getMenuPorCategoria(this.id_restaurante, id_categoria)
-      .subscribe((result: Producto[]) => (this.productos = result));
+    if (id_categoria == 0) {
+      this.getMenu();
+    } else {
+      this.service
+        .getMenuPorCategoria(this.id_restaurante, id_categoria)
+        .subscribe((result: Producto[]) => (this.productos = result));
+    }
+
     this.categoria_seleccionada = categoria;
   }
 
-  loadItems() {
+  getMenu() {
     this.service
       .getMenu(this.id_restaurante)
       .subscribe((result: Producto[]) => (this.productos = result));
+  }
+
+  loadItems() {
+    this.getMenu();
 
     this.service
       .getRestaurante(this.id_restaurante)

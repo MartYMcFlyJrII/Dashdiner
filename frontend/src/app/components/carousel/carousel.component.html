@@ -1,4 +1,4 @@
-<ngb-carousel class="h-[250px] mr-6 w-full">
+<ngb-carousel class="max-h-[250px] mr-6 w-full">
   <ng-template ngbSlide *ngFor="let item of promociones">
     <div class="picsum-img-wrapper">
       <img src="{{item.imagen}}" class="h-[250px] object-cover brightness-50 w-full rounded-md"
@@ -6,7 +6,7 @@
     </div>
     <div class="carousel-caption flex flex-col">
       <h2 class="text-xl font-bold text-start text-orange-600">PROMOCIÓN</h2>
-      <h3 class="text-6xl font-bold text-start">{{item.nombre}} ${{item.precio}}</h3>
+      <h3 class="text-5xl md:text-6xl font-bold text-start">{{item.nombre}} ${{item.precio}}</h3>
 
       <p class="text-lg text-start">{{item.descripcion}}</p>
 

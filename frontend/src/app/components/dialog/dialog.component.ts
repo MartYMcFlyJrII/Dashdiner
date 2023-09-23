@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Opcion } from 'src/app/models/opcion';
+import { Producto } from 'src/app/models/producto';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -8,8 +10,11 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./dialog.component.css'],
 })
 export class DialogComponent {
+  decimal(n: any) {
+    return Number(n).toFixed(2);
+  }
   producto: any;
-  proyector: any;
+  opciones: Opcion[] = [];
   mensaje: any;
   closemessage = {
     tipo: 'success',
@@ -28,16 +33,9 @@ export class DialogComponent {
   }
 
   recibirInformacion(code: number) {
-    // this.service.getProyector(code).subscribe((item) => {
-    //   this.proyector = item;
-    //   this.datosInput.formGroup.setValue({
-    //     id: this.proyector.id,
-    //     nombre: this.proyector.nombre,
-    //     fechaAgregado: this.proyector.fechaAgregado,
-    //     serie: this.proyector.serie,
-    //     estatus: this.proyector.estatus,
-    //   });
-    // });
+    this.service.getOpciones(code).subscribe((result) => {
+      this.opciones = result;
+    });
   }
 
   closeModal(success = false) {

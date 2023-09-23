@@ -1,15 +1,14 @@
 <div class="pt-8">
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 place-content-center	 lg:grid-cols-3   gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8 grid-flow-row px-16 md:px-4 "
-    [ngClass]="{'xl:grid-cols-3':producto || editable, 'xl:grid-cols-4': restaurante }">
+    class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 lg:px-4 gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8   ">
     <div class="flex flex-1 " *ngFor="let item of items">
-      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white"
+      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white "
         [ngClass]="{'bg-gray-200': !item.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === item.id}"
         (click)="!editable && !restaurante && seleccionar(item)">
-        <mat-card-header class="w-full">
-          <img *ngIf="producto || editable" mat-card-image class="rounded-t-3xl w-full h-[250px] object-fill "
+        <mat-card-header class="w-full h-full">
+          <img *ngIf="producto || editable" mat-card-image class="rounded-t-3xl w-full h-full   object-cover "
             src="{{item.imagen}}" [ngClass]="{'filter grayscale': !item.estado}" />
-          <img *ngIf="restaurante" mat-card-image class="object-fill rounded-t-3xl  h-[250px] w-full 	"
+          <img *ngIf="restaurante" mat-card-image class="object-cover rounded-t-3xl h-full  w-full 	"
             src="{{item.logo}}" />
         </mat-card-header>
 

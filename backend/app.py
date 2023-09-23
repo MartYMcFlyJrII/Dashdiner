@@ -1,7 +1,8 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from database import Producto, Restaurante, Usuario, Categoria, TipoUsuario
+from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
+from sqlalchemy.orm import joinedload
 
 app = Flask(__name__)
 CORS(app)
@@ -90,6 +91,49 @@ def get_producto_by_id(id):
     producto = convertir_a_dict(producto)
     return jsonify(producto)
 
+@app.route('/opcion/<int:id_opcion>',methods=['GET'])
+def get_opcion(id_opcion):
+    opcion = db.session.query(Opcion).filter_by(id=id_opcion).options(joinedload(Opcion.selecciones_disponibles)).first()
+    opcion_dict = {
+            "id": opcion.id,
+            "id_producto": opcion.id_producto,
+            "titulo": opcion.titulo,
+            "multiple": opcion.multiple,
+            "selecciones_disponibles": [
+                {
+                    "id": seleccion.id,
+                    "nombre": seleccion.nombre,
+                    "precio": seleccion.precio,
+                    "estado": seleccion.estado,
+                }
+                for seleccion in opcion.selecciones_disponibles
+            ],
+        }
+    return jsonify(opcion_dict)
+
+@app.route('/opciones/<int:id_producto>',methods=['GET'])
+def get_opciones(id_producto):
+    opciones_with_selecciones = db.session.query(Opcion).filter_by(id_producto=id_producto).options(joinedload(Opcion.selecciones_disponibles)).all()
+    result = []
+    for opcion in opciones_with_selecciones:
+        opcion_dict = {
+            "id": opcion.id,
+            "id_producto": opcion.id_producto,
+            "titulo": opcion.titulo,
+            "multiple": opcion.multiple,
+            "selecciones_disponibles": [
+                {
+                    "id": seleccion.id,
+                    "nombre": seleccion.nombre,
+                    "precio": seleccion.precio,
+                    "estado": seleccion.estado,
+                }
+                for seleccion in opcion.selecciones_disponibles
+            ],
+        }
+        result.append(opcion_dict)
+    return jsonify(result)
+
 
 def convertir_a_dict(resultado):
     dict_resultado = vars(resultado)
@@ -116,6 +160,18 @@ def main():
         # db.session.commit()
         # producto = Producto(id_restaurante=1, id_categoria=2, nombre="Mexicana", descripcion="Pizza de chorizo, tocino y jalapeño", precio=10.0, estado=True, promocion=True, imagen='https://mandolina.co/wp-content/uploads/2023/07/pizza-mexciana.png')    
         # db.session.add(producto)
+        # db.session.commit()
+        # opcion = Opcion(id_producto=1, titulo="Elige el tamaño:", multiple=False)    
+        # db.session.add(opcion)
+        # db.session.commit()
+        # seleccion = Seleccion_disponible(id_opcion=1, nombre="Mediana", precio=0.0, estado=True)    
+        # db.session.add(seleccion)
+        # db.session.commit()
+        # seleccion = Seleccion_disponible(id_opcion=1, nombre="Grande", precio=20.0, estado=True)    
+        # db.session.add(seleccion)
+        # db.session.commit()
+        # seleccion = Seleccion_disponible(id_opcion=1, nombre="Familiar", precio=30.0, estado=True)    
+        # db.session.add(seleccion)
         # db.session.commit()
 
         

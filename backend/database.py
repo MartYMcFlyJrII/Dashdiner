@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import enum
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -48,17 +49,15 @@ class Producto(db.Model):
     precio = db.Column(db.Double,nullable=False)
     estado = db.Column(db.Boolean,nullable=False)
     promocion = db.Column(db.Boolean,nullable=False)
+    opciones = relationship("Opcion", backref="producto")
     
 class Opcion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    id_producto = db.Column(db.Integer,db.ForeignKey('producto.id'))
     titulo = db.Column(db.String(100), nullable=False)
     multiple = db.Column(db.Boolean,nullable=False)
-    
-class Producto_Opcion(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    id_producto = db.Column(db.Integer,db.ForeignKey('producto.id'))
-    id_opcion = db.Column(db.Integer,db.ForeignKey('opcion.id'))
-    
+    selecciones_disponibles = relationship("Seleccion_disponible", backref="opcion")
+
 class Seleccion_disponible(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_opcion = db.Column(db.Integer,db.ForeignKey('opcion.id'))

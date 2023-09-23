@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormComponent } from 'src/app/components/form/form.component';
@@ -46,12 +46,13 @@ export class AdminMenuComponent {
   }
   openModal(code: number, title: string, component: any) {
     var _popup = this.dialog.open(component, {
-      width: '70%',
+      panelClass: ['lg:w-[70%]', 'w-full'],
       enterAnimationDuration: '500ms',
       exitAnimationDuration: '500ms',
       data: {
         title: title,
         code: code,
+        tipoProducto: true,
         formGroup: this.buildr.group({
           id: this.buildr.control(0),
           id_restaurante: this.buildr.control(0),
@@ -61,23 +62,9 @@ export class AdminMenuComponent {
           precio: [null, Validators.required],
           imagen: [null, Validators.required],
           estado: this.buildr.control(false),
-          opciones: [
-            {
-              id: 0,
-              titulo: '',
-              multiple: false,
-              selecciones: [{ id: 0, nombre: '', precio: 10.0, estado: false }],
-            },
-          ],
+          promocion: this.buildr.control(false),
+          opciones: this.buildr.array([]),
         }),
-        formColumns: [
-          'Categoria',
-          'Nombre',
-          'Descripción',
-          'Precio',
-          'Imagen',
-          'Estado',
-        ],
       },
     });
     _popup.afterClosed().subscribe((item) => {

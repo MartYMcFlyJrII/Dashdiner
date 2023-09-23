@@ -6,6 +6,7 @@ import { Restaurante } from '../models/restaurante';
 import { catchError, of } from 'rxjs';
 import { Producto } from '../models/producto';
 import { Categoria } from '../models/categoria';
+import { Opcion } from '../models/opcion';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,16 @@ export class GlobalService {
     );
   }
 
+  public getOpciones(id_producto: number): Observable<Opcion[]> {
+    return this.http.get<Opcion[]>(`${API_URL}/opciones/${id_producto}`);
+  }
+  public getOpcion(id_producto: number): Observable<Opcion> {
+    return this.http.get<Opcion>(`${API_URL}/opcion/${id_producto}`);
+  }
+
+  public getProducto(id_producto: number): Observable<Producto> {
+    return this.http.get<Producto>(`${API_URL}/producto/${id_producto}`);
+  }
   public getProductos(id_administrador: number): Observable<Producto[]> {
     return this.http.get<Producto[]>(
       `${API_URL}/productos/${id_administrador}`

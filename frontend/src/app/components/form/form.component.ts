@@ -1,8 +1,14 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input } from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GlobalService } from 'src/app/services/global.service';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OpcionFormComponent } from '../opcion-form/opcion-form.component';
+import { Opcion } from 'src/app/models/opcion';
 
 @Component({
   selector: 'app-form',
@@ -11,77 +17,30 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 })
 export class FormComponent {
   producto: any;
+  opciones: Opcion[] = [];
   form: any;
-
-  constructor(
-    @Inject(MAT_DIALOG_DATA) public datos: any,
-    private formBuilder: FormBuilder,
-    private ref: MatDialogRef<DialogComponent>,
-    private service: GlobalService
-  ) {}
-
-  ngOnInit(): void {
-    this.producto = this.datos.formGroup;
-    if (this.datosInput.code > 0) {
-      this.recibirInformacion(this.datosInput.code);
-    }
-    this.form = this.formBuilder.group({
-      id: this.producto.id,
-      id_restaurante: this.producto.id_restaurante,
-      id_categoria: this.producto.id_categoria,
-      nombre: this.producto.nombre,
-      descripcion: this.producto.descripcion,
-      precio: this.producto.precio,
-      imagen: this.producto.imagen,
-      estado: this.producto.estado,
-      opciones: this.buildOpciones(this.producto.opciones),
-    });
-  }
-
-  get productos(): FormArray {
-    return this.form.get('productos') as FormArray;
-  }
-
-  buildOpciones(productos: { phoneNo: string; emailAddr: string }[] = []) {
-    return this.formBuilder.array(
-      productos.map((producto) => this.formBuilder.group(producto))
-    );
-  }
-
-  addproductoField() {
-    this.productos.push(
-      this.formBuilder.group({ phoneNo: null, emailAddr: null })
-    );
-  }
-
-  removeproductoField(index: number): void {
-    if (this.productos.length > 1) this.productos.removeAt(index);
-    else this.productos.patchValue([{ phoneNo: null, emailAddr: null }]);
-  }
-
-  submit(value: any): void {
-    console.log(value);
-  }
-
-  reset(): void {
-    this.form.reset();
-    this.productos.clear();
-    this.addproductoField();
-  }
-
   datosInput: any;
-  proyector: any;
   mensaje: any;
+  opcionesArray: FormArray = new FormArray<FormGroup>([]);
   closemessage = {
     tipo: 'success',
     contenido: 'Los cambios se han cambiado de manera exitosa.',
   };
   url = '/assets/placeholder.png';
-  // constructor(
-  //   @Inject(MAT_DIALOG_DATA) public datos: any,
-  //   private ref: MatDialogRef<DialogComponent>,
-  //   private service: GlobalService
-  // ) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public datos: any,
+    private buildr: FormBuilder,
+    private ref: MatDialogRef<DialogComponent>,
+    private service: GlobalService,
+    private dialog: MatDialog
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.datos.formGroup;
+    if (this.datos.code > 0) {
+      this.recibirInformacionProducto(this.datos.code);
+    }
+  }
 
   onSelectFile(e: any) {
     if (e.target.files) {
@@ -93,17 +52,78 @@ export class FormComponent {
       };
     }
   }
-  recibirInformacion(code: number) {
-    // this.service.getProyector(code).subscribe((item) => {
-    //   this.proyector = item;
-    //   this.datosInput.formGroup.setValue({
-    //     id: this.proyector.id,
-    //     nombre: this.proyector.nombre,
-    //     fechaAgregado: this.proyector.fechaAgregado,
-    //     serie: this.proyector.serie,
-    //     estatus: this.proyector.estatus,
-    //   });
-    // });
+
+  createOpcionFields(): FormGroup {
+    return this.buildr.group({
+      id: this.buildr.control(0),
+      id_producto: this.buildr.control(0),
+      titulo: ['', Validators.required],
+      multiple: this.buildr.control(false),
+      selecciones_disponibles: this.buildr.array([]),
+    });
+  }
+
+  createSeleccionFields(): FormGroup {
+    return this.buildr.group({
+      id: this.buildr.control(0),
+      id_opcion: this.buildr.control(0),
+      nombre: ['', Validators.required],
+      precio: [null, Validators.required],
+      estado: this.buildr.control(false),
+    });
+  }
+
+  recibirInformacionOpciones(code: number): void {
+    this.service.getOpciones(code).subscribe((result) => {
+      this.opciones = result;
+      // this.opcionesArray = this.form.get('opciones') as FormArray;
+
+      // result.forEach((opcionData) => {
+      //   const opcionGroup = this.buildr.group({
+      //     id: opcionData.id,
+      //     id_producto: opcionData.id_producto,
+      //     multiple: opcionData.multiple,
+      //     titulo: opcionData.titulo,
+      //     selecciones_disponibles: this.buildr.array([]), // Form array for selecciones_disponibles
+      //   });
+
+      //   // Populate selecciones_disponibles
+      //   opcionData.selecciones_disponibles.forEach((seleccionData) => {
+      //     const seleccionGroup = this.buildr.group({
+      //       id: seleccionData.id,
+      //       nombre: seleccionData.nombre,
+      //       precio: seleccionData.precio,
+      //       estado: seleccionData.estado,
+      //     });
+
+      //     (opcionGroup.get('selecciones_disponibles') as FormArray).push(
+      //       seleccionGroup
+      //     );
+      //   });
+
+      //   this.opcionesArray.push(opcionGroup);
+      // });
+    });
+  }
+  recibirInformacionProducto(code: number) {
+    this.service.getProducto(code).subscribe((result) => {
+      this.producto = result;
+      this.url = this.producto.imagen;
+      this.recibirInformacionOpciones(this.producto.id);
+      this.form.patchValue({
+        id: this.producto.id,
+        id_categoria: this.producto.id_categoria,
+        nombre: this.producto.nombre,
+        descripcion: this.producto.descripcion,
+        precio: this.producto.precio,
+        imagen: this.producto.imagen,
+        estado: this.producto.estado,
+        id_restaurante: this.producto.id_restaurante,
+        promocion: this.producto.promocion,
+      });
+    });
+
+    console.log(this.form);
   }
 
   agregarOpcion() {}
@@ -130,5 +150,21 @@ export class FormComponent {
     //     contenido: 'Por favor, llene todos los campos.',
     //   };
     // }
+  }
+
+  decimal(n: any) {
+    return Number(n).toFixed(2);
+  }
+
+  openModal(code: number) {
+    var _popup = this.dialog.open(OpcionFormComponent, {
+      width: 'fit',
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '500ms',
+      data: {
+        code: code,
+        id_producto: this.datos.code,
+      },
+    });
   }
 }

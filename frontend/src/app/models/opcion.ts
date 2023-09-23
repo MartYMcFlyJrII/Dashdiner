@@ -1,5 +1,9 @@
+import { Seleccion } from './seleccion';
+
 export class Opcion {
-  id?: number;
+  id: number = 0;
+  id_producto?: number;
   titulo: string = '';
-  tipo: string = ''; //puede ser de una seleccion o varias
+  multiple: boolean = false; //puede ser de una seleccion o varias
+  selecciones_disponibles: Seleccion[] = [];
 }
