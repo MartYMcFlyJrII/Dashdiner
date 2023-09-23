@@ -1,12 +1,15 @@
-from flask import Flask, jsonify, request
+import re
+from flask import Flask, jsonify, request, redirect, render_template
 from flask_cors import CORS
 from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
+from passlib.hash import sha256_crypt
 from sqlalchemy.orm import joinedload
 
 app = Flask(__name__)
+app.secret_key = "klNmsS679SDqwpñl"
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/dashdiner'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Hola''@localhost/dashdiner'
 
 
 @app.route('/')
@@ -319,10 +322,142 @@ def get_opciones(id_producto):
     return jsonify(result)
 
 
-def convertir_a_dict(resultado):
+@app.route('/registro_admin', methods=['GET', 'POST'])
+def registro_admin():
+    if request.method == 'GET':
+        return render_template('registro_admin.html')  
+    if request.method == 'POST':
+        valor = request.form['enviar']
+       
+        if valor == "enviar":
+                username = request.form['username']
+                nombre = request.form['nombre']
+                apellido = request.form['apellido']
+                correo = request.form['correo']
+                celular = request.form['celular']
+                rfc = request.form['rfc']
+                password = request.form['password']
+                tipo = 'admin'
+
+                if not verificar_password(password):
+                  print('La contraseña debe tener al menos una mayúscula, una minúscula, un número, un carácter especial y longitud mayor a 8.')
+                  return jsonify("error en el password") 
+
+
+                password_encriptada = sha256_crypt.hash(password)
+
+                nuevo_usuario = Usuario(
+                    nombre_usuario=username,
+                    correo=correo,
+                    password=password_encriptada,
+                    celular=celular,
+                    nombre=nombre,
+                    apellido=apellido,
+                    rfc=rfc,
+                    tipo=tipo
+                )
+
+                if celular.isdigit() and len(celular) == 10:
+                    try :
+                        db.session.add(nuevo_usuario)
+                        db.session.commit()
+                        usuario = db.session.execute(db.select(Usuario)).all()
+                        lista_usuario = []
+                        for r in usuario:
+                            usuario1 = convertir_a_dict(r[0])
+                            lista_usuario.append(usuario1)
+
+                        nombres_usuarios = []
+                        id = nuevo_usuario.id
+
+                        for usuario_dict in lista_usuario:
+                            nombre_usuario = usuario_dict.get("nombre_usuario")  # Obtener el nombre de usuario del diccionario
+                            if nombre_usuario:
+                                nombres_usuarios.append(nombre_usuario)
+                                
+                        return redirect(f"/registro_restaurante/{id}")
+                        #return render_template("registro_restaurante.html",id= nuevo_usuario.id)
+                    
+
+                    except Exception as e:
+                        print(e)
+                        
+                        return jsonify("error") 
+                else:
+                    print(len(celular))
+                    return jsonify(celular,"no es celular")
+                    
+
+@app.route('/registro_restaurante/<int:id_usuario>', methods=['GET', 'POST'])
+def registro_restaurante(id_usuario):
+    if request.method == 'GET':
+        print(id_usuario)
+        return render_template('registro_restaurante.html', id = id_usuario)  
+    if request.method == 'POST':
+        valor = request.form['enviar']
+        if valor == "enviar":
+                id_user = id_usuario
+                nombre = request.form['nombre']
+                descripcion = request.form['descripcion']
+                logo = request.form['logo']
+                horario = request.form['horario']
+                celular = request.form['celular']
+                direccion = request.form['direccion']
+                nuevo_restaurante = Restaurante(
+                    id_usuario=id_user,
+                    nombre=nombre,
+                    descripcion=descripcion,
+                    logo=logo,
+                    horario=horario,
+                    celular=celular,
+                    direccion=direccion
+                )
+                if celular.isdigit() and len(celular) == 10:
+                    try :
+                        db.session.add(nuevo_restaurante)
+                        db.session.commit()
+                        return redirect("/restaurantes")
+                    except Exception as e:
+                        print(e)   
+                        return jsonify("error")
+                else:
+                    print(len(celular))
+                    return jsonify(celular,"no es celular")
+                
+                
+
+def convertir_a_dict(resultado)->dict:
     dict_resultado = vars(resultado)
     dict_resultado.pop('_sa_instance_state')
     return dict_resultado
+
+def verificar_password(password)->bool:
+       # Verificar si la contraseña tiene al menos una mayúscula
+    if len(password) >8:
+        if not re.search(r'[A-Z]', password):
+            return False
+
+        # Verificar si la contraseña tiene al menos una minúscula
+        if not re.search(r'[a-z]', password):
+            return False
+
+        # Verificar si la contraseña tiene al menos un número
+        if not re.search(r'[0-9]', password):
+            return False
+
+        # Verificar si la contraseña tiene al menos un carácter especial
+        if not re.search(r'[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]', password):
+            return False
+        
+        else:
+            return True
+    else:
+        return False
+
+
+
+
+
 
 def main():
     db.init_app(app)
