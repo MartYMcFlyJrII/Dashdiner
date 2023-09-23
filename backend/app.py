@@ -120,7 +120,7 @@ def login():
             session['celular'] = usuario_existente.celular
             session['rfc'] = usuario_existente.rfc
             session['logeado']= True 
-            return jsonify({'logeado': True})
+            return jsonify({'logeado': True, 'id':session['usuario_id'], 'tipo':session['tipo'], 'nombre':session['nombre'], 'apellido':session['apellido'], 'nombre_usuario':session['nombre_usuario']})
         else:
             return jsonify({'logeado': False, 'mensaje': 'Contraseña incorrecta'})
     else:
@@ -135,7 +135,7 @@ def main():
     # create database dashdiner;
     with app.app_context():
         db.create_all()
-    app.run()
+    app.run(debug=True)
     
 
 

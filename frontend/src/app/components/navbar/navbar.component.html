@@ -3,9 +3,8 @@
   <app-searchbar class="grow" />
   <div class="flex justify-around items-center gap-3">
 
-    <button mat-button (click)="redirect('login')"
-      class="text-orange-600 font-medium	text-xs flex items-center gap-1 hidden md:flex"> <mat-icon
-        color="primary">account_circle</mat-icon>Ingresar</button>
+    <button *ngIf="!logeado" mat-button (click)="redirect('login')" class="text-orange-600 font-medium	text-xs flex items-center gap-1 hidden md:flex" > <mat-icon
+      color="primary">account_circle</mat-icon>Ingresar</button>
     <div class="flex md:hidden">
       <mat-icon color="primary">account_circle</mat-icon>
     </div>
