@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Producto } from 'src/app/models/producto';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Restaurante } from 'src/app/models/restaurante';
+import { GlobalService } from 'src/app/services/global.service';
+import { Categoria } from 'src/app/models/categoria';
 
 @Component({
   selector: 'app-grid',
@@ -15,6 +17,7 @@ export class GridComponent {
   @Input() restaurante?: boolean;
   @Input() editable?: boolean;
   @Input() producto?: boolean;
+  @Input() categoria?: boolean;
   @Output() editar = new EventEmitter();
   @Output() cambiados = new EventEmitter<Producto>();
   @Input() items: any[] = [];
@@ -22,7 +25,11 @@ export class GridComponent {
   @Output() seleccionado = new EventEmitter<Producto>();
   itemSeleccionado?: Producto;
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private service: GlobalService
+  ) {}
   ngOnInit() {}
 
   seleccionar(prod: Producto) {
@@ -31,6 +38,22 @@ export class GridComponent {
 
   desactivarProducto(prod: Producto) {
     this.openModal(prod, DialogComponent);
+  }
+
+  eliminarCategoria(cat: Categoria, index: number) {
+    this.service.eliminarCategoria(cat).subscribe({
+      complete: () => {
+        this.items.splice(index, 1);
+      }, // completeHandler
+      error: (e: any) => {
+        console.log(e);
+        this.mensaje = e.error;
+      }, // errorHandler
+    });
+  }
+
+  editarCategoria(cat: Categoria) {
+    this.editar.emit(cat);
   }
   editarProducto(prod: Producto) {
     this.editar.emit(prod);
@@ -69,8 +92,8 @@ export class GridComponent {
 
     this.cambiados.emit(prod);
 
-    // this.service.guardarProducto(prod).subscribe((response) => {
-    //   this.mensaje = response;
-    // });
+    this.service.guardarProducto(prod).subscribe((response) => {
+      //this.mensaje = response;
+    });
   }
 }

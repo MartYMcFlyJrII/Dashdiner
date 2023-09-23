@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FormComponent } from 'src/app/components/form/form.component';
 import { Producto } from 'src/app/models/producto';
+import { Restaurante } from 'src/app/models/restaurante';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class AdminMenuComponent {
   id_administrador: number = 0;
   grid: boolean = true;
   table: boolean = false;
+  restaurante: Restaurante = new Restaurante();
 
   constructor(
     private service: GlobalService,
@@ -30,6 +32,7 @@ export class AdminMenuComponent {
   ngOnInit() {
     this.id_administrador = parseInt(this.route.snapshot.parent?.params['id']);
     this.loadItems();
+    this.getRestaurante();
   }
 
   agregarProducto() {
@@ -46,12 +49,13 @@ export class AdminMenuComponent {
   }
   openModal(code: number, title: string, component: any) {
     var _popup = this.dialog.open(component, {
-      panelClass: ['lg:w-[70%]', 'w-full'],
+      panelClass: ['lg:w-[80%]', 'w-full'],
       enterAnimationDuration: '500ms',
       exitAnimationDuration: '500ms',
       data: {
         title: title,
         code: code,
+        id_restaurante: this.restaurante.id,
         tipoProducto: true,
         formGroup: this.buildr.group({
           id: this.buildr.control(0),
@@ -90,6 +94,12 @@ export class AdminMenuComponent {
     //     this.proyCambiados = [];
     //   });
     // });
+  }
+
+  getRestaurante() {
+    this.service
+      .getRestauranteAdmin(this.id_administrador)
+      .subscribe((result: Restaurante) => (this.restaurante = result));
   }
 
   loadItems() {

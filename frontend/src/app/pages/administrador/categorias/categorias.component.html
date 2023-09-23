@@ -1,14 +1,15 @@
 <main class="mx-8 lg:mx-12 mt-6">
   <div class="flex justify-between items-end">
     <div>
-      <h1 class=" text-2xl font-semibold mt-2 text-orange-600">Menú</h1>
-      <p class="text-sm text-gray-400">En este apartado puedes agregar productos, modificarlos y editarlos</p>
+      <h1 class=" text-2xl font-semibold mt-2 text-orange-600">Categorías</h1>
+      <p class="text-sm text-gray-400">En este apartado puedes agregar y modificar tus categorías para organizar tus
+        productos en el menú</p>
     </div>
 
 
-    <button mat-stroked-button (click)="agregarProducto()" color="primary"
+    <button mat-stroked-button (click)="agregarCategoria()" color="primary"
       class="text-sm bg-white rounded-lg py-5 flex items-center min-w-fit ">Agregar
-      producto<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>
+      categoria<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>
 
   </div>
   <div class="my-8">
@@ -21,8 +22,7 @@
 
 
 
-    <app-grid *ngIf="grid" [editable]="true" (editar)="editarProducto($event)" (cambiados)="agregarCambio($event)"
-      [items]="productos"></app-grid>
+    <app-grid [editable]="true" [categoria]="true" (editar)="editarCategoria($event)" [items]="categorias"></app-grid>
 
 
     <!-- <div *ngIf="loaderService.isLoading | async" class="flex w-full h-[72vh] justify-center items-center">

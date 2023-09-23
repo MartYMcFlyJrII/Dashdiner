@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OpcionFormComponent } from '../opcion-form/opcion-form.component';
 import { Opcion } from 'src/app/models/opcion';
+import { Categoria } from 'src/app/models/categoria';
 
 @Component({
   selector: 'app-form',
@@ -19,14 +20,20 @@ export class FormComponent {
   producto: any;
   opciones: Opcion[] = [];
   form: any;
+  selectedOption: string | null = null;
+
   datosInput: any;
   mensaje: any;
+  categorias: Categoria[] = [];
+  eliminados: number[] = [];
   opcionesArray: FormArray = new FormArray<FormGroup>([]);
   closemessage = {
     tipo: 'success',
     contenido: 'Los cambios se han cambiado de manera exitosa.',
   };
   url = '/assets/placeholder.png';
+  newOption: string = ''; // To store the user-entered new option
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public datos: any,
     private buildr: FormBuilder,
@@ -37,6 +44,11 @@ export class FormComponent {
 
   ngOnInit(): void {
     this.form = this.datos.formGroup;
+    this.service
+      .getCategorias(this.datos.id_restaurante)
+      .subscribe((result) => {
+        this.categorias = result;
+      });
     if (this.datos.code > 0) {
       this.recibirInformacionProducto(this.datos.code);
     }
@@ -134,26 +146,40 @@ export class FormComponent {
   }
 
   guardar() {
-    // if (this.datosInput.formGroup.valid) {
-    //   this.service.guardarProyector(this.datosInput.formGroup.value).subscribe({
-    //     complete: () => {
-    //       this.closeModal(true);
-    //     }, // completeHandler
-    //     error: (e) => {
-    //       console.log(e);
-    //       this.mensaje = e.error;
-    //     }, // errorHandler
-    //   });
-    // } else {
-    //   this.mensaje = {
-    //     tipo: 'error',
-    //     contenido: 'Por favor, llene todos los campos.',
-    //   };
-    // }
+    if (this.form.valid) {
+      if (this.eliminados.length > 0) {
+        this.service.eliminarOpciones(this.eliminados).subscribe({
+          complete: () => {}, // completeHandler
+          error: (e) => {
+            console.log(e);
+            this.mensaje = e.error;
+          }, // errorHandler
+        });
+      }
+      this.service.guardarProducto(this.form.value).subscribe({
+        complete: () => {
+          this.closeModal(true);
+        }, // completeHandler
+        error: (e: any) => {
+          console.log(e);
+          this.mensaje = e.error;
+        }, // errorHandler
+      });
+    } else {
+      this.mensaje = {
+        tipo: 'error',
+        contenido: 'Por favor, llene todos los campos.',
+      };
+    }
   }
 
   decimal(n: any) {
     return Number(n).toFixed(2);
+  }
+
+  eliminar(index: number, opcion_id: number) {
+    this.opciones.splice(index, 1);
+    this.eliminados.push(opcion_id);
   }
 
   openModal(code: number) {
@@ -165,6 +191,10 @@ export class FormComponent {
         code: code,
         id_producto: this.datos.code,
       },
+    });
+    _popup.afterClosed().subscribe((item) => {
+      //this.mensaje = item;
+      this.recibirInformacionOpciones(this.datos.code);
     });
   }
 }

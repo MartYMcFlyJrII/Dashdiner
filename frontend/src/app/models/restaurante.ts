@@ -1,5 +1,5 @@
 export class Restaurante {
-  id?: number;
+  id: number = 0;
   id_usuario?: number; //debe ser tipo admin
   nombre: string = '';
   descripcion: string = '';

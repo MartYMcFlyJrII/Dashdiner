@@ -17,7 +17,8 @@
       <label for="files"
         class="cursor-pointer	self-center my-4 bg-white hover:bg-orange-50 border border-gray-300 text-orange-600 py-2 px-4 rounded-xl max-w-fit">Seleccionar
         imagen</label>
-      <input id=files type="file" (change)="onSelectFile($event)" class="hidden" placeholder="Seleccione la imagen" />
+      <input id=files type="file" (change)="onSelectFile($event)" class="hidden" placeholder="Seleccione la imagen"
+        accept="image/*" />
       <mat-form-field class="w-full">
         <mat-label>Nombre de producto</mat-label>
         <input required="true" matInput placeholder="" formControlName="nombre">
@@ -31,6 +32,14 @@
         <textarea required="true" matInput placeholder="" formControlName="descripcion"></textarea>
       </mat-form-field>
 
+      <mat-form-field class="w-full">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="id_categoria" [(ngModel)]="selectedOption">
+          <mat-option [value]="c.id" *ngFor="let c of categorias">
+            {{c.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <div class="flex items-center justify-between mb-2">
         <mat-label class="text-gray-700">¿El producto está activo?</mat-label>
@@ -45,13 +54,13 @@
     </div>
 
     <mat-divider class="lg:hidden lg:my-0 my-4"></mat-divider>
-    <div class="flex flex-col lg:max-h-[540px] w-full lg:overflow-y-auto xl:px-10 px-4 gap-6 ">
+    <div class="flex flex-col lg:max-h-full w-full lg:overflow-y-auto xl:px-10 px-4 gap-6 ">
       <button mat-raised-button (click)="agregarOpcion()" color="primary"
         class="text-sm text-white rounded-lg py-5 items-center max-w-fit self-end m-0 lg:hidden"
         (click)="openModal(0)">Agregar
         opción<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>
-      <div class="m-2" *ngFor="let opcion of opciones">
-        <p class="font-semibold text-md px-4">OPCIÓN {{opcion.id}}</p>
+      <div class="m-2" *ngFor="let opcion of opciones; let i = index">
+        <p class="font-semibold text-md px-4">OPCIÓN {{i+1}}</p>
         <div class="shadow-lg rounded-sm flex flex-col p-4 gap-4">
           <div class="flex justify-between">
             <div>
@@ -59,9 +68,9 @@
               <p class=" text-xl">{{opcion.titulo}}</p>
             </div>
             <div>
-              <button (click)="openModal(opcion.id)" mat-icon-button><mat-icon
+              <button (click)="openModal(opcion.id)" mat-icon-button type="button"><mat-icon
                   class="text-orange-600 ">edit</mat-icon></button>
-              <button (click)="openModal(opcion.id)" mat-icon-button><mat-icon
+              <button (click)="eliminar(i, opcion.id)" mat-icon-button type="button"><mat-icon
                   class="text-orange-600 ">delete</mat-icon></button>
             </div>
 

@@ -24,7 +24,7 @@
 
   <div>
 
-    <button mat-raised-button color="primary" class="text-white rounded-lg mb-4"><mat-icon
+    <button (click)="agregarSeleccion()" mat-raised-button color="primary" class="text-white rounded-lg mb-4"><mat-icon
         iconPositionEnd>add_circle_outline</mat-icon>Agregar
       selección</button>
 
@@ -32,7 +32,10 @@
 
     <div *ngFor="let seleccion of seleccionGroup.controls; let i = index"
       class="flex gap-2 justify-between items-center">
-      <!-- <button mat-icon-button><mat-icon class="text-orange-600 ">remove_circle_outline</mat-icon></button> -->
+      <button [ngClass]="{'text-white pointer-events-none	': i == 0}"
+        (click)="eliminarSeleccion(i,seleccion.get('id')?.value)" mat-icon-button><mat-icon
+          [ngClass]="{'text-white pointer-events-none	': i == 0}"
+          class="text-orange-600 ">remove_circle_outline</mat-icon></button>
       <mat-form-field class="min-w-fit -mb-[1.25em]">
         <mat-label>Nombre de selección</mat-label>
         <input required="true" matInput placeholder="" [formControl]="getControl(i,'nombre')">
@@ -46,7 +49,7 @@
     </div>
   </div>
   <div mat-dialog-actions class="flex gap-4 justify-end mr-4">
-    <button mat-raised-button type="submit" color="primary" class="text-white">Confirmar</button>
+    <button mat-raised-button type="submit" color="primary" class="text-white" (click)="guardar()">Confirmar</button>
     <a (click)="closeModal()" mat-stroked-button color="primary">Cerrar</a>
     <!-- <button mat-raised-button [mat-dialog-close]="closemessage" color="accent">Cancel</button> -->
   </div>

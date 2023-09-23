@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
@@ -12,6 +12,182 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/dashd
 @app.route('/')
 def home():
     return jsonify('hola mundo')
+
+@app.route('/producto', methods = ['POST', 'PUT'])
+def guardar_producto():
+    if request.method == 'POST':
+        data = request.get_json()
+        producto = Producto(
+    id_restaurante=data['id_restaurante'],
+    id_categoria=data['id_categoria'],
+    descripcion=data['descripcion'],
+    nombre=data['nombre'],
+    precio=data['precio'],
+    imagen=data['imagen'],
+    estado=data['estado'],
+    promocion=data['promocion']
+)
+        db.session.add(producto)
+        db.session.commit()
+
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+    elif request.method == 'PUT':
+        data = request.get_json()
+        producto = Producto.query.filter_by(id=data['id']).first()
+        producto.id_restaurante = data['id_restaurante']
+        producto.id_categoria = data['id_categoria']
+        producto.descripcion = data['descripcion']
+        producto.nombre = data['nombre']
+        producto.precio = data['precio']
+        producto.imagen = data['imagen']
+        producto.estado = data['estado']
+        producto.promocion = data['promocion']
+        # Commit the session again to save the Seleccion_disponible objects
+        db.session.commit()
+        # 
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+
+@app.route('/categoria', methods = ['POST', 'PUT'])
+def guardar_categoria():
+    if request.method == 'POST':
+        data = request.get_json()
+        opcion = Categoria(
+    id_restaurante=data['id_restaurante'],
+    nombre=data['nombre'],
+)
+        db.session.add(opcion)
+        db.session.commit()
+
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+    elif request.method == 'PUT':
+        data = request.get_json()
+        cat = Categoria.query.filter_by(id=data['id']).first()
+        cat.nombre = data['nombre']
+        db.session.commit()
+        # 
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+    
+@app.route('/opcion', methods = ['POST', 'PUT'])
+def guardar_opcion():
+    if request.method == 'POST':
+        data = request.get_json()
+        opcion = Opcion(
+    id_producto=data['id_producto'],
+    titulo=data['titulo'],
+    multiple=data['multiple']
+)
+        db.session.add(opcion)
+        db.session.commit()
+
+        for seleccion_data in data['selecciones_disponibles']:
+            existing_seleccion = Seleccion_disponible.query.filter_by(id=seleccion_data['id']).first()
+    
+            if existing_seleccion:
+                # Update the existing record if found
+                existing_seleccion.precio = seleccion_data['precio']
+                existing_seleccion.estado = seleccion_data['estado']
+            else:
+                seleccion = Seleccion_disponible(
+        id_opcion=opcion.id,  # Use the generated 'id' of 'opcion'
+        nombre=seleccion_data['nombre'],
+        precio=seleccion_data['precio'],
+        estado=seleccion_data['estado']
+    )
+                db.session.add(seleccion)
+
+        # Commit the session again to save the Seleccion_disponible objects
+        db.session.commit()
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+    elif request.method == 'PUT':
+        data = request.get_json()
+        opcion = Opcion.query.filter_by(id=data['id']).first()
+        opcion.titulo = data['titulo']
+        opcion.multiple = data['multiple']
+
+        for seleccion_data in data['selecciones_disponibles']:
+            existing_seleccion = Seleccion_disponible.query.filter_by(id=seleccion_data['id']).first()
+    
+            if existing_seleccion:
+                # Update the existing record if found
+                existing_seleccion.nombre = seleccion_data['nombre']
+                existing_seleccion.precio = seleccion_data['precio']
+                existing_seleccion.estado = seleccion_data['estado']
+            else:
+                seleccion = Seleccion_disponible(
+        id_opcion=opcion.id,  # Use the generated 'id' of 'opcion'
+        nombre=seleccion_data['nombre'],
+        precio=seleccion_data['precio'],
+        estado=seleccion_data['estado']
+    )
+                db.session.add(seleccion)
+
+        # Commit the session again to save the Seleccion_disponible objects
+        db.session.commit()
+        # 
+        return jsonify({'mensaje':'La opción se actualizo correctamente'}),200
+
+
+@app.route('/eliminar_categoria', methods=['DELETE'])
+def delete_categoria():
+    try:
+        index = request.args.get('index')
+        #indexes_list = indexes_to_delete.split(',')
+
+        # Convert the string indexes to integers
+        #indexes_to_delete = [int(index) for index in indexes_list]
+
+        # Handle the deletion of items based on the 'indexes_to_delete' array
+        # Perform your logic here
+        existing = Categoria.query.filter_by(id=index).first()
+        db.session.delete(existing)
+        db.session.commit()
+
+        response_data = {'message': 'Items deleted successfully'}
+        return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    
+@app.route('/eliminar_opciones', methods=['DELETE'])
+def delete_opciones():
+    try:
+        indexes_to_delete = request.args.get('indexes')
+        #indexes_list = indexes_to_delete.split(',')
+
+        # Convert the string indexes to integers
+        #indexes_to_delete = [int(index) for index in indexes_list]
+
+        # Handle the deletion of items based on the 'indexes_to_delete' array
+        # Perform your logic here
+        for index in indexes_to_delete:
+            existing_seleccion = Opcion.query.filter_by(id=index).first()
+            db.session.delete(existing_seleccion)
+        db.session.commit()
+
+        response_data = {'message': 'Items deleted successfully'}
+        return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+    
+@app.route('/eliminar_selecciones', methods=['DELETE'])
+def delete_selecciones():
+    try:
+        indexes_to_delete = request.args.get('indexes')
+        #indexes_list = indexes_to_delete.split(',')
+
+        # Convert the string indexes to integers
+        #indexes_to_delete = [int(index) for index in indexes_list]
+
+        # Handle the deletion of items based on the 'indexes_to_delete' array
+        # Perform your logic here
+        for index in indexes_to_delete:
+            existing_seleccion = Seleccion_disponible.query.filter_by(id=index).first()
+            db.session.delete(existing_seleccion)
+        db.session.commit()
+
+        response_data = {'message': 'Items deleted successfully'}
+        return jsonify(response_data), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 # GET all restaurantes
 @app.route('/restaurantes', methods=['GET'])
@@ -29,6 +205,12 @@ def get_restaurante_by_id(id):
     restaurante = db.get_or_404(Restaurante, id)
     restaurante = convertir_a_dict(restaurante)
     return jsonify(restaurante)   
+
+@app.route('/restaurante_admin/<int:id_administrador>', methods=['GET'])
+def get_restaurante_admin(id_administrador):
+    restaurante = db.session.execute(db.select(Restaurante).where(Restaurante.id_usuario == id_administrador)).first()
+    restaurante = convertir_a_dict(restaurante[0])
+    return jsonify(restaurante)
 
 @app.route('/menu/<int:id_restaurante>', methods=['GET'])
 def get_menu(id_restaurante):
@@ -68,8 +250,8 @@ def get_categorias(id_restaurante):
 
 @app.route('/categoria/<int:id>', methods=['GET'])
 def get_categoria_by_id(id):
-    categoria = db.get_or_404(Categoria, id)
-    categoria = convertir_a_dict(categoria)
+    categoria = db.session.execute(db.select(Categoria).where(Categoria.id == id)).first()
+    categoria = convertir_a_dict(categoria[0])
     return jsonify(categoria)   
 # GET producto
 @app.route('/productos/<int:id_administrador>', methods=['GET'])
@@ -90,6 +272,8 @@ def get_producto_by_id(id):
     producto = db.get_or_404(Producto, id)
     producto = convertir_a_dict(producto)
     return jsonify(producto)
+
+
 
 @app.route('/opcion/<int:id_opcion>',methods=['GET'])
 def get_opcion(id_opcion):

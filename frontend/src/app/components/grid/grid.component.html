@@ -1,4 +1,25 @@
-<div class="pt-8">
+<div *ngIf="categoria;else gridImagen">
+  <div class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 px-12 lg:px-4 gap-5   ">
+    <div class="flex flex-1 " *ngFor="let item of items; let i = index">
+      <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white ">
+        <mat-card-content class="p-5 w-full">
+          <div class="flex justify-between ">
+            <mat-card-title class="font-bold text-lg block">{{item.nombre}} </mat-card-title>
+          </div>
+
+          <mat-card-actions *ngIf="editable" class="flex justify-around mt-4 gap-5">
+            <button mat-stroked-button (click)="eliminarCategoria(item, i)"
+              class="py-4  text-sm rounded-lg min-w-[120px]" color="primary">Eliminar</button>
+            <button mat-stroked-button (click)="editarCategoria(item)" class="py-4  text-sm rounded-lg"
+              color="primary">Editar</button>
+          </mat-card-actions>
+        </mat-card-content>
+
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #gridImagen class="pt-6">
   <div
     class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 lg:px-4 gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8   ">
     <div class="flex flex-1 " *ngFor="let item of items">
@@ -37,4 +58,4 @@
       </div>
     </div>
   </div>
-</div>
+</ng-template>

@@ -16,6 +16,8 @@ import { DialogComponent } from '../dialog/dialog.component';
   styleUrls: ['./opcion-form.component.css'],
 })
 export class OpcionFormComponent {
+  mensaje: any;
+  eliminados: number[] = [];
   opcionGroup: FormGroup = new FormGroup({
     id: this.buildr.control(0),
     id_producto: this.buildr.control(0),
@@ -23,7 +25,14 @@ export class OpcionFormComponent {
     titulo: this.buildr.control(''),
     selecciones_disponibles: this.buildr.array([]), // Form array for selecciones_disponibles
   });
-  seleccionGroup: FormArray = new FormArray<FormGroup>([]);
+  seleccionGroup: FormArray = new FormArray<FormGroup>([
+    this.buildr.group({
+      id: this.buildr.control(0),
+      nombre: this.buildr.control(''),
+      precio: this.buildr.control(0),
+      estado: this.buildr.control(false),
+    }),
+  ]);
   closemessage = {
     tipo: 'success',
     contenido: 'Los cambios se han cambiado de manera exitosa.',
@@ -41,6 +50,9 @@ export class OpcionFormComponent {
       this.title = 'Editar opción';
       this.recibirInformacionOpcion(this.datos.code);
     } else {
+      this.opcionGroup.patchValue({
+        id_producto: this.datos.id_producto,
+      });
       this.title = 'Agregar opción';
     }
   }
@@ -51,6 +63,63 @@ export class OpcionFormComponent {
 
   getControl(index: number, col: string) {
     return this.seleccionGroup.at(index).get(col) as FormControl;
+  }
+
+  eliminarSeleccion(index: number, seleccion_id: number) {
+    (this.opcionGroup.get('selecciones_disponibles') as FormArray).removeAt(
+      index
+    );
+    this.eliminados.push(seleccion_id);
+    this.seleccionGroup = this.opcionGroup.get(
+      'selecciones_disponibles'
+    ) as FormArray;
+  }
+
+  guardar() {
+    if (this.opcionGroup.valid) {
+      if (this.eliminados.length > 0) {
+        this.service.eliminarSelecciones(this.eliminados).subscribe({
+          complete: () => {
+            this.closeModal(true);
+          }, // completeHandler
+          error: (e) => {
+            console.log(e);
+            this.mensaje = e.error;
+          }, // errorHandler
+        });
+      }
+
+      console.log(this.opcionGroup.value);
+
+      this.service.guardarOpcion(this.opcionGroup.value).subscribe({
+        complete: () => {
+          this.closeModal(true);
+        }, // completeHandler
+        error: (e) => {
+          console.log(e);
+          this.mensaje = e.error;
+        }, // errorHandler
+      });
+    } else {
+      this.mensaje = {
+        tipo: 'error',
+        contenido: 'Por favor, llene todos los campos.',
+      };
+    }
+  }
+  agregarSeleccion() {
+    const seleccionGroup = this.buildr.group({
+      id: this.buildr.control(0),
+      nombre: this.buildr.control(''),
+      precio: this.buildr.control(0),
+      estado: this.buildr.control(false),
+    });
+    (this.opcionGroup.get('selecciones_disponibles') as FormArray).push(
+      seleccionGroup
+    );
+    this.seleccionGroup = this.opcionGroup.get(
+      'selecciones_disponibles'
+    ) as FormArray;
   }
   recibirInformacionOpcion(index: number) {
     this.service.getOpcion(index).subscribe((opcionData: any) => {
@@ -78,7 +147,5 @@ export class OpcionFormComponent {
     this.seleccionGroup = this.opcionGroup.get(
       'selecciones_disponibles'
     ) as FormArray;
-    console.log('AQUI ');
-    console.log(this.opcionGroup);
   }
 }

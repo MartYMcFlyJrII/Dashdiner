@@ -9,6 +9,7 @@ export class SidenavComponent {
   fillerNav = [
     { name: 'Dashbord', route: 'dashboard', icon: 'dashboard' },
     { name: 'Menú', route: 'menu', icon: 'fastfood' },
+    { name: 'Categorías', route: 'categorias', icon: 'category' },
     { name: 'Órdenes', route: 'ordenes', icon: 'edit_note' },
     { name: 'Mi Cuenta', route: 'cuenta', icon: 'account_circle' },
   ];
