@@ -4,7 +4,7 @@ import { Categoria } from 'src/app/models/categoria';
 import { Producto } from 'src/app/models/producto';
 import { Restaurante } from 'src/app/models/restaurante';
 import { GlobalService } from 'src/app/services/global.service';
-
+import { Usuario } from 'src/app/models/usuario';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -18,6 +18,7 @@ export class MenuComponent {
   categoria_seleccionada: Categoria = new Categoria();
   categoria_inicial: Categoria = new Categoria();
   promociones: Producto[] = [];
+  usuario: Usuario = new Usuario();
   constructor(private route: ActivatedRoute, private service: GlobalService) {}
 
   ngOnInit() {
@@ -28,6 +29,9 @@ export class MenuComponent {
       this.route.snapshot.paramMap.get('id') || '0'
     );
     this.loadItems();
+    this.service.UserData.subscribe((usuario) => {
+      this.usuario = usuario;
+    });
   }
 
   actualizarProductos(id_categoria: any, categoria: Categoria) {
@@ -46,6 +50,7 @@ export class MenuComponent {
     this.service
       .getMenu(this.id_restaurante)
       .subscribe((result: Producto[]) => (this.productos = result));
+      console.log(this.usuario);
   }
 
   loadItems() {

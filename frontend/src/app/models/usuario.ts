@@ -8,4 +8,6 @@ export class Usuario {
   contraseña: string = '';
   tipo: string = ''; //admin o cliente
   rfc?: string; //nulo si es tipo cliente
+  mensaje: string = '';
+  logeado: boolean = false;
 }

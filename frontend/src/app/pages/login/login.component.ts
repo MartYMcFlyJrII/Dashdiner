@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service'; // Ajusta la ruta adecuada
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
-import {User} from 'src/app/services/user'
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +18,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     
   }
-
+  redirectToRegistration() {
+    // Redirige al usuario a la página de registro-cliente
+    this.router.navigateByUrl('/registro-cliente'); // Ajusta la ruta según tu configuración
+  }
   get email() { return this.loginForm.controls.email; }
   get password() { return this.loginForm.controls.password; }
   login(){
@@ -30,7 +33,16 @@ export class LoginComponent implements OnInit {
       this.globalService.login(correo,password).subscribe(response => {
         if (response.logeado) {
           // Autenticación exitosa, redirige a la página de inicio (home)
-          this.router.navigateByUrl('/');
+          if(response.tipo=="cliente"){
+            this.router.navigateByUrl('/');
+          }
+          if(response.tipo=="admin"){
+            this.router.navigateByUrl('/admin');
+          }
+          if(response.tipo=="cocina"){
+            this.router.navigateByUrl('/cocina');
+          }
+          
           this.loginForm.reset();
           this.globalService.setLogeado(true);
           //setLogeado(true);
@@ -46,6 +58,8 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       alert("Datos incorrectos");
     }
+
+    
   }
   // Aquí puedes utilizar globalService.login() para hacer la solicitud HTTP
   // onLoginClick() {

@@ -9,12 +9,21 @@ import { GlobalService } from 'src/app/services/global.service'; // Ajusta la ru
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  logeado: BehaviorSubject<boolean> = this.globalService.logeado;
+  logeado: boolean = this.globalService.logeado;
   
   constructor(private globalService: GlobalService, private router: Router) {}
   ngOnInit(): void {
     
     
+  }
+  logout() {
+    // Realiza el proceso de logout aquí, por ejemplo, limpiando la sesión o el token
+    // Luego, redirige al usuario a la página de inicio de sesión
+    this.globalService.logout();
+
+
+    // Redirige al usuario a la página de inicio de sesión (ajusta la ruta según tu configuración)
+    this.router.navigateByUrl('/login');
   }
 
   redirect(pagename: string) {

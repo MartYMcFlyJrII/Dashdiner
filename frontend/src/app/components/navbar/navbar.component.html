@@ -8,6 +8,11 @@
     <div class="flex md:hidden">
       <mat-icon color="primary">account_circle</mat-icon>
     </div>
+    <button *ngIf="logeado" mat-button (click)="logout()" class="text-orange-600 font-medium	text-xs flex items-center gap-1 hidden md:flex" > <mat-icon
+      color="primary">account_circle</mat-icon>Logout</button>
+    <div class="flex md:hidden">
+      <mat-icon color="primary">account_circle</mat-icon>
+    </div>
     <mat-divider [vertical]="true" class="h-1/2"></mat-divider>
     <button mat-flat-button class="text-gray-600" (click)="redirect('carrito')"><mat-icon
         class="m-0">shopping_cart</mat-icon></button>

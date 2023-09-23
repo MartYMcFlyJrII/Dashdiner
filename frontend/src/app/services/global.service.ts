@@ -8,15 +8,16 @@ import { Producto } from '../models/producto';
 import { Categoria } from '../models/categoria';
 import { Opcion } from '../models/opcion';
 import { Seleccion } from '../models/seleccion';
-import { User } from './user';
+import { Usuario } from '../models/usuario';
 import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
-  logeado: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
-  UserData: BehaviorSubject<User>=new BehaviorSubject<User>({id:0,nombre_usuario:"",nombre:"",apellido:"",correo:"",tipo:"",mensaje:"",logeado:false});
+  //logeado: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
+  logeado = false;
+  UserData: BehaviorSubject<Usuario>=new BehaviorSubject<Usuario>({id:0,nombre_usuario:'',correo:'',celular:'',nombre:'',apellido:'',contraseña:'',tipo:'',rfc:'',mensaje:'',logeado:false});
   
   constructor(private http: HttpClient) {}
 
@@ -120,17 +121,37 @@ export class GlobalService {
     const body = { correo: correo, password: password };
 
     // Realiza una solicitud HTTP POST al servidor con el objeto JSON
-    return this.http.post<any>(`${API_URL}/login`, body);
+    return this.http.post<any>(`${API_URL}/login`, body).pipe(
+      map((response) => {
+        if (response.logeado) {
+          this.UserData.next(response);
+          this.logeado=true;
+          console.log(this.UserData.value);
+        }
+        return response;
+      }),
+      catchError((err) => {
+        return of(err.error);
+      })
+    );
   }
-  get User_Data():Observable<User>{
+  get User_Data():Observable<Usuario>{
     return this.UserData.asObservable();
   }
   
-  get Logeado():Observable<boolean>{
-    return this.logeado.asObservable();
-  }
+  
 
   setLogeado(value:boolean){
-    this.logeado.next(value);
+    this.logeado=value;
+  }
+
+  logout() {
+    // Realiza la lógica de logout aquí, por ejemplo, limpiando la sesión o el token
+    // También puedes restablecer cualquier otro estado de autenticación o usuario
+    // Por ejemplo:
+    // Establece el estado de autenticación en falso
+    this.logeado = false;
+    this.UserData.next; // Borra los datos del usuario
+    
   }
 }
