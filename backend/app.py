@@ -1,10 +1,11 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, redirect, request, session
 from flask_cors import CORS
 from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
 from sqlalchemy.orm import joinedload
 
 app = Flask(__name__)
+app.secret_key = 'tostitosconquesotostitosconyogurt'
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/dashdiner'
 
@@ -12,6 +13,36 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/dashd
 @app.route('/')
 def home():
     return jsonify('hola mundo')
+
+@app.route('/login', methods=['POST'])
+def login():
+    """
+    Este método sirve para checar si el usuario que se quiere
+    logear exista en la base de datos
+    """
+    data = request.get_json()
+    correo = data.get('correo')
+    password = data.get('password')
+    usuario_existente = Usuario.query.filter_by(correo=correo).first()
+    print('Correo Electrónico:', correo)
+    print('Contraseña:', password)
+    if usuario_existente:
+        if password==usuario_existente.password:#sha256_crypt.verify(usuario_existente.password, password):  
+            session.clear()
+            session['usuario_id'] = usuario_existente.id
+            session['correo'] = usuario_existente.correo
+            session['nombre'] = usuario_existente.nombre
+            session['apellido'] = usuario_existente.apellido
+            session['tipo'] = usuario_existente.tipo.value
+            session['nombre_usuario'] = usuario_existente.nombre_usuario
+            session['celular'] = usuario_existente.celular
+            session['rfc'] = usuario_existente.rfc
+            session['logeado']= True 
+            return jsonify({'logeado': True, 'id':session['usuario_id'], 'tipo':session['tipo'], 'nombre':session['nombre'], 'apellido':session['apellido'], 'nombre_usuario':session['nombre_usuario']})
+        else:
+            return jsonify({'logeado': False, 'mensaje': 'Contraseña incorrecta'})
+    else:
+        return jsonify({'mensaje': 'El usuario no existe', 'logeado': False})
 
 @app.route('/producto', methods = ['POST', 'PUT'])
 def guardar_producto():

@@ -8,6 +8,10 @@ flask = "*"
 flask-cors = "*"
 flask-sqlalchemy = "*"
 pymysql = "*"
+requests = "*"
+pymysql = "*"
+python-dotenv = "*"
+passlib = "*"
 
 [dev-packages]
 

@@ -1,0 +1,233 @@
+.sign-up-container{
+    margin: 0; 
+    display: flex;
+    position: absolute;
+    background-color: rgb(255, 250, 247);
+}
+/****************/
+
+.dd-logo-container{
+    width: 400px;
+}
+.dd-logo{
+    margin-top: 80px; 
+    padding-top: 40px; 
+    padding-bottom: 30px; 
+    width: 85px;
+}
+
+/****************/
+
+.sign-up-contents{
+    z-index: 101;
+    background-color: rgb(255, 250, 247); 
+    font-family: Roboto, Arial; 
+    font-size: 14px; 
+    color: rgb(169, 169, 169);
+    height: 100%; 
+    display: grid; 
+    justify-content: center; 
+    padding-left: 80px; 
+    padding-right: 80px;
+}
+
+/****************/
+
+.sign-up-legend-container{
+    display: grid;
+    justify-items: center;
+}
+.sign-up-legend-title{
+    color: black;
+    display: block;
+    margin-bottom: 10px; 
+    font-size: 34px; 
+    font-weight: bold;
+}
+.sign-up-legend-subtitle{
+    display: block;
+    margin-bottom: 20px;
+}
+
+/****************/
+
+label{
+    gap: 0 0.5rem;
+    display: block;
+}
+
+.sign-up-fields-container{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+}
+
+.sign-up-fields-firstRow,
+.sign-up-fields-secondRow,
+.sign-up-fields-thirdRow{
+    display: flex;
+    flex-direction: row;
+}
+
+#password,
+#email,
+#firstName,
+#lastName,
+#phone,
+#confpassword{
+    width: 200px;
+    height: 25px;
+    margin-top: 5px;
+    border: solid 2px;
+    border-radius: 16px;
+    border-color: rgb(244, 137, 8);
+}
+
+.sign-up-firstName-container,
+.sign-up-lastName-container,
+.sign-up-email-container,
+.sign-up-phone-container,
+.sign-up-password-container,
+.sign-up-confpassword-container{
+    margin-right: 10px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+}
+
+/****************/
+
+.sign-up-footer{
+    padding-left: 70px;
+    padding-right: 70px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 45px;
+    display: grid;
+    position: relative;
+}
+
+#termsUseLabel{
+    display: inline-block;
+}
+
+.sign-up-forgot-pass{
+    position: absolute;
+    color: rgb(244, 137, 8);
+    right: 60px;
+    height: 16px;
+    margin-top: 2px;
+    padding: 0;
+}
+
+.sign-up-forgot-pass:hover{
+    cursor: pointer;
+}
+
+/****************/
+
+.sign-up-button-container{
+    padding-left: 70px;
+    padding-right: 70px;
+    display: grid;
+    justify-items: center;
+}
+.sign-up-button{
+    border: 0px;
+    border-radius: 16px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    width: 140px;
+    height: 32px;
+    background-color: rgb(244, 137, 8);
+    color: white;
+    transition: opacity 0.15s;
+}
+.sign-up-button:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+.sign-up-button:active{
+    background-color: rgb(255, 140, 0);
+    opacity: 1.5;
+}
+
+/****************/
+
+.sign-up-other-acc-container{
+    padding-left: 70px;
+    padding-right: 70px;
+    margin-top: 12px;
+    display: grid;
+    justify-items: center;
+}
+.sign-up-other-acc-title{
+    color: black;
+}
+.sign-up-other-acc-some{
+    display: flex;
+    flex-direction: row;
+    margin-top: 12px;
+}
+.sign-up-google,
+.sign-up-facebook,
+.sign-up-instagram,
+.sign-up-linkedin{
+    width: 20px;
+}
+.sign-up-google-container,
+.sign-up-facebook-container,
+.sign-up-instagram-container,
+.sign-up-linkedin-container{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+/****************/
+
+.sign-up-have-acc-container{
+    padding-left: 70px;
+    padding-right: 70px;
+    margin-left: 30px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: space-between;
+}
+.sign-up-acc-title{
+    margin-left: 18px;
+    color: black;
+}
+.sign-up-sign-in{
+    margin-left: 3px;
+    color: rgb(244, 137, 8);
+}
+.sign-up-sign-in:hover{
+    cursor: pointer;
+}
+
+/****************/
+
+.promo-image-container{
+    flex-grow: 1;
+}
+.promo-image-group{
+    z-index: 104;
+    position: relative;
+    top: 120px;
+    left: 100px;
+    width: 600px;
+}
+.promo-image-salad{
+    z-index: 104;
+    position: relative;
+    left: -345px;
+    top: 300px;
+    width: 300px;
+}
+.promo-image-elipse{
+    z-index: 102;
+    position: relative;
+    top: -600px;
+    left: -250px;
+    width: 1000px;
+}

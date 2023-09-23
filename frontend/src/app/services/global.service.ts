@@ -8,11 +8,16 @@ import { Producto } from '../models/producto';
 import { Categoria } from '../models/categoria';
 import { Opcion } from '../models/opcion';
 import { Seleccion } from '../models/seleccion';
+import { User } from './user';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
+  logeado: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
+  UserData: BehaviorSubject<User>=new BehaviorSubject<User>({id:0,nombre_usuario:"",nombre:"",apellido:"",correo:"",tipo:"",mensaje:"",logeado:false});
+  
   constructor(private http: HttpClient) {}
 
   public getAllRestaurantes(): Observable<Restaurante[]> {
@@ -109,5 +114,23 @@ export class GlobalService {
   }
   public getRestaurante(id: number): Observable<Restaurante> {
     return this.http.get<Restaurante>(`${API_URL}/restaurante/${id}`);
+  }
+
+  public login(correo: string, password: string): Observable<any> {
+    const body = { correo: correo, password: password };
+
+    // Realiza una solicitud HTTP POST al servidor con el objeto JSON
+    return this.http.post<any>(`${API_URL}/login`, body);
+  }
+  get User_Data():Observable<User>{
+    return this.UserData.asObservable();
+  }
+  
+  get Logeado():Observable<boolean>{
+    return this.logeado.asObservable();
+  }
+
+  setLogeado(value:boolean){
+    this.logeado.next(value);
   }
 }
