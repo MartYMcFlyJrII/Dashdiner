@@ -14,6 +14,7 @@ export class HomeComponent {
 
   ngOnInit() {
     this.loadItems();
+    console.log(this.service.User_Data.forEach((value) => console.log(value)));
   }
   loadItems() {
     this.service
