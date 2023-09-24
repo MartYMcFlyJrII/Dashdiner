@@ -28,12 +28,14 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
       const correo = (document.getElementById('email') as HTMLInputElement).value;; // Obtén el correo del usuario desde tu formulario
       const password = (document.getElementById('password') as HTMLInputElement).value;; // Obtén la contraseña del usuario desde tu formulario
-  
+      
       // Llama al método login de GlobalService
       this.globalService.login(correo,password).subscribe(response => {
+        console.log(response);
         if (response.logeado) {
           // Autenticación exitosa, redirige a la página de inicio (home)
           if(response.tipo=="cliente"){
+
             this.router.navigateByUrl('/');
           }
           if(response.tipo=="admin"){
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
           
           this.loginForm.reset();
           this.globalService.setLogeado(true);
+          sessionStorage.setItem('usuario', JSON.stringify(response));
           //setLogeado(true);
           console.log(this.globalService.logeado);
         } else {

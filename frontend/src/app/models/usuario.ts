@@ -5,7 +5,6 @@ export class Usuario {
   celular: string = '';
   nombre: string = '';
   apellido: string = '';
-  contraseña: string = '';
   tipo: string = ''; //admin o cliente
   rfc?: string; //nulo si es tipo cliente
   mensaje: string = '';

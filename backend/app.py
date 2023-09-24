@@ -4,6 +4,7 @@ from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuari
 from database import db
 from sqlalchemy.orm import joinedload
 
+
 app = Flask(__name__)
 app.secret_key = 'tostitosconquesotostitosconyogurt'
 CORS(app)
@@ -38,7 +39,8 @@ def login():
             session['celular'] = usuario_existente.celular
             session['rfc'] = usuario_existente.rfc
             session['logeado']= True 
-            return jsonify({'logeado': True, 'id':session['usuario_id'], 'tipo':session['tipo'], 'nombre':session['nombre'], 'apellido':session['apellido'], 'nombre_usuario':session['nombre_usuario']})
+            
+            return jsonify({'id':session['usuario_id'], 'tipo':session['tipo'], 'nombre':session['nombre'], 'apellido':session['apellido'], 'nombre_usuario':session['nombre_usuario'],'logeado': True})
         else:
             return jsonify({'logeado': False, 'mensaje': 'Contraseña incorrecta'})
     else:

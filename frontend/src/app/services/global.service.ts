@@ -10,6 +10,8 @@ import { Opcion } from '../models/opcion';
 import { Seleccion } from '../models/seleccion';
 import { Usuario } from '../models/usuario';
 import { BehaviorSubject, map } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,7 @@ import { BehaviorSubject, map } from 'rxjs';
 export class GlobalService {
   //logeado: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
   logeado = false;
-  UserData: BehaviorSubject<Usuario>=new BehaviorSubject<Usuario>({id:0,nombre_usuario:'',correo:'',celular:'',nombre:'',apellido:'',contraseña:'',tipo:'',rfc:'',mensaje:'',logeado:false});
+  UserData: BehaviorSubject<Usuario>=new BehaviorSubject<Usuario>({id:0,nombre_usuario:'',correo:'',celular:'',nombre:'',apellido:'',tipo:'',rfc:'',mensaje:'',logeado:false});
   
   constructor(private http: HttpClient) {}
 
@@ -117,28 +119,64 @@ export class GlobalService {
     return this.http.get<Restaurante>(`${API_URL}/restaurante/${id}`);
   }
 
-  public login(correo: string, password: string): Observable<any> {
+  public login(correo: string, password: string): Observable<Usuario> {
     const body = { correo: correo, password: password };
-
+  
     // Realiza una solicitud HTTP POST al servidor con el objeto JSON
     return this.http.post<any>(`${API_URL}/login`, body).pipe(
-      map((response) => {
+      map((response: any) => {
         if (response.logeado) {
-          this.UserData.next(response);
-          this.logeado=true;
-          console.log(this.UserData.value);
+          const usuario: Usuario = {
+            id: response.id,
+            nombre_usuario: response.nombre_usuario,
+            correo: response.correo,
+            celular: '', // Puedes asignar un valor por defecto o tomarlo del servidor si está disponible
+            nombre: response.nombre,
+            apellido: response.apellido,
+            tipo: response.tipo,
+            rfc: response.rfc,
+            mensaje: response.mensaje,
+            logeado: true,
+          };
+          // Guardar datos en sessionStorage
+          
+
+          this.UserData.next(usuario);
         }
-        return response;
+        return response; // O bien, podrías devolver el objeto 'Usuario' aquí si lo necesitas en el componente
       }),
       catchError((err) => {
         return of(err.error);
       })
     );
   }
-  get User_Data():Observable<Usuario>{
+  
+
+  public get User_Data():Observable<Usuario>{
     return this.UserData.asObservable();
   }
   
+  public setUsuario(response: any): void {
+    if (response.logeado) {
+      const usuario: Usuario = {
+        id: response.id,
+        nombre_usuario: response.nombre_usuario,
+        correo: response.correo,
+        celular: '', // Puedes asignar un valor por defecto o tomarlo del servidor si está disponible
+        nombre: response.nombre,
+        apellido: response.apellido,
+        tipo: response.tipo,
+        rfc: response.rfc,
+        mensaje: response.mensaje,
+        logeado: true,
+      };
+  
+      // Guardar datos en sessionStorage
+      sessionStorage.setItem('usuario', JSON.stringify(usuario));
+  
+      this.UserData.next(usuario);
+    }
+  }
   
 
   setLogeado(value:boolean){
@@ -152,6 +190,7 @@ export class GlobalService {
     // Establece el estado de autenticación en falso
     this.logeado = false;
     this.UserData.next; // Borra los datos del usuario
+    sessionStorage.removeItem('usuario');
     
   }
 }

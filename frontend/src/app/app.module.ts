@@ -45,6 +45,8 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CategoriasComponent } from './pages/administrador/categorias/categorias.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
