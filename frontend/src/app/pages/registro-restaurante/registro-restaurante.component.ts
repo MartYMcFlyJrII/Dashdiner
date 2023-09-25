@@ -39,7 +39,7 @@ export class RegistroRestauranteComponent {
             if(password == password2){
               //se crea el objeto restaurante
               const Usuario = {
-                nombre_usuario: nombre +" "+ apellido,
+                nombre_usuario: correo,
                 correo: correo,
                 password: password,
                 celular: numeroTelefono,
@@ -49,7 +49,7 @@ export class RegistroRestauranteComponent {
                 tipo: "admin"
               }
               //se manda a llamar el metodo de registro de restaurante de global service
-              this.globalService.registroAdmin(Usuario).subscribe(response => {
+              this.globalService.registro(Usuario).subscribe(response => {
                 if(response.registrado){
                   //se dirige a la pagina siguiente, para terminar el registro del restaurante
                   this.router.navigate(['/']);

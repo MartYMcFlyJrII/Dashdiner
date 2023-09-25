@@ -61,8 +61,8 @@ def existingEmail():
     else:
         return jsonify({'existe': False})
 
-@app.route('/registroAdmin', methods=['POST'])
-def registrar_restauranteAdmin():
+@app.route('/registro', methods=['POST'])
+def registrar_usuario():
     print("Entra al metodo registroAdmin")
     if request.method == 'POST':
         print("Entra al metodo POST de registroAdmin")

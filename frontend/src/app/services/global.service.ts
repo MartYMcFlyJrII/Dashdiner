@@ -115,10 +115,14 @@ export class GlobalService {
     return this.http.post<any>(`${API_URL}/existingEmail`, body);
   }
 
-  //esto sirve para registrar conectar el front con el back para el admin de  un restaurante en la base de datos
-  public registroAdmin(usuario: any): Observable<any> {
-    return this.http.post<any>(`${API_URL}/registroAdmin`, usuario);//el admin se manda como objeto JSON con todos los campos
-  }
+  //esto sirve para registrar conectar el front con el back para el usuario en la base de datos
+  // public registro(usuario: any): Observable<any> {
+  //   return this.http.post<any>(`${API_URL}/registro/${usuario.tipo}`, usuario);
+  // }
+  public registro(usuario: any): Observable<any> {
+       return this.http.post<any>(`${API_URL}/registro`, usuario);
+     }
+  
   
 
   public getRestauranteAdmin(
