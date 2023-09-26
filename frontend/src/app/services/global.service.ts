@@ -108,6 +108,23 @@ export class GlobalService {
     );
   }
 
+  //esto sirve para verificar si el correo ya existe en la base de datos y no se pueda registrar
+  public existingEmail(correo: string): Observable<any> {
+    const body = { correo: correo};
+    // Realiza una solicitud HTTP POST al servidor con el objeto JSON
+    return this.http.post<any>(`${API_URL}/existingEmail`, body);
+  }
+
+  //esto sirve para registrar conectar el front con el back para el usuario en la base de datos
+  // public registro(usuario: any): Observable<any> {
+  //   return this.http.post<any>(`${API_URL}/registro/${usuario.tipo}`, usuario);
+  // }
+  public registro(usuario: any): Observable<any> {
+       return this.http.post<any>(`${API_URL}/registro`, usuario);
+     }
+  
+  
+
   public getRestauranteAdmin(
     id_administrador: number
   ): Observable<Restaurante> {

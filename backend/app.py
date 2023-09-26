@@ -46,6 +46,44 @@ def login():
             return jsonify({'logeado': False, 'mensaje': 'Contraseña incorrecta'})
     else:
         return jsonify({'mensaje': 'El usuario no existe', 'logeado': False})
+    
+@app.route('/existingEmail', methods=['POST'])
+def existingEmail():
+    print("Entra al metodo existingEmail")
+    if request.method == 'POST':
+        print("Entra al metodo POST")
+        correo = request.get_json().get('correo')
+        usuario_existente = Usuario.query.filter_by(correo=correo).first()
+        print("Ejecutó la consulta")
+        if usuario_existente:
+            return jsonify({'existe': True})
+        else:
+            return jsonify({'existe': False})
+    else:
+        return jsonify({'existe': False})
+
+@app.route('/registro', methods=['POST'])
+def registrar_usuario():
+    print("Entra al metodo registroAdmin")
+    if request.method == 'POST':
+        print("Entra al metodo POST de registroAdmin")
+        data = request.get_json()
+        usuario = Usuario(
+        nombre_usuario=data['nombre_usuario'],
+        correo=data['correo'],
+        password=data['password'],
+        celular=data['celular'],
+        nombre=data['nombre'],
+        apellido=data['apellido'],
+        rfc=data['rfc'],
+        tipo=data['tipo']
+        )
+        db.session.add(usuario)
+        db.session.commit()
+        return jsonify({'mensaje':'El restaurante se registro correctamente','registrado':True}),200
+    else:
+        print("Entra al metodo else de registroAdmin")
+        return jsonify({'mensaje':'El restaurante no se registro correctamente',}),400
 
 @app.route("/forgot-password", methods=['POST'])
 def forgot_password():
