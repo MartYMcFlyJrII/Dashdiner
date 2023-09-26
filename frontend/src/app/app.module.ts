@@ -45,8 +45,9 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { CategoriasComponent } from './pages/administrador/categorias/categorias.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
-
-
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetCodeComponent } from './pages/reset-code/reset-code.component';
+import { NewPasswordComponent } from './pages/new-password/new-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,6 +75,9 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
     CarouselComponent,
     CategoriasComponent,
     CategoriaComponent,
+    ForgotPasswordComponent,
+    ResetCodeComponent,
+    NewPasswordComponent,
   ],
   imports: [
     BrowserModule,

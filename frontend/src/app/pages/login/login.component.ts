@@ -22,6 +22,10 @@ export class LoginComponent implements OnInit {
     // Redirige al usuario a la página de registro-cliente
     this.router.navigateByUrl('/registro-cliente'); // Ajusta la ruta según tu configuración
   }
+  redirectToForgot_password() {
+    // Redirige al usuario a la página de registro-cliente
+    this.router.navigateByUrl('/forgot-password'); // Ajusta la ruta según tu configuración
+  }
   get email() { return this.loginForm.controls.email; }
   get password() { return this.loginForm.controls.password; }
   login(){

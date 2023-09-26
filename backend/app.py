@@ -1,9 +1,10 @@
+from random import randint
 from flask import Flask, jsonify, redirect, request, session
 from flask_cors import CORS
 from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
 from sqlalchemy.orm import joinedload
-
+from funciones import *
 
 app = Flask(__name__)
 app.secret_key = 'tostitosconquesotostitosconyogurt'
@@ -45,6 +46,31 @@ def login():
             return jsonify({'logeado': False, 'mensaje': 'Contraseña incorrecta'})
     else:
         return jsonify({'mensaje': 'El usuario no existe', 'logeado': False})
+
+@app.route("/forgot-password", methods=['POST'])
+def forgot_password():
+    """Controla restablecer contraseña.
+    Se asegura que no haya una sesion iniciada.
+    Se confirma que el usuario exista y se envia un codigo de recuperación.
+    Se redirige a reset_code"""
+    data = request.get_json()
+    correo = data.get('correo')
+    print('Correo Electrónico:', correo)
+    usuario_existente = Usuario.query.filter_by(correo=correo).first()
+    if usuario_existente:
+        correo = usuario_existente.correo
+        codigo = ''
+        for i in range(4):
+            numero = randint(0, 9)
+            codigo += str(numero)
+        session['codigo'] = codigo
+        print('Codigo:', codigo)
+        # MANDAR CODIGO POR CORREO DE LA PERSONA
+        enviar_correo('dashdiner115@gmail.com', usuario_existente.correo, 'dtel eiej hyjo pkud', codigo)
+        return jsonify({'correo': usuario_existente.correo, 'codigo': codigo, 'codigoboolean': True})
+    else:
+        return jsonify({'mensaje': 'Correo no registrado con este correo', 'codigoboolean': False})
+
 
 @app.route('/producto', methods = ['POST', 'PUT'])
 def guardar_producto():

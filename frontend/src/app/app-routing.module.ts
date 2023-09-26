@@ -11,7 +11,9 @@ import { AdministradorComponent } from './pages/administrador/administrador.comp
 import { AdminAuthGuard } from './guards/admin-auth.guard';
 import { AdminMenuComponent } from './pages/administrador/admin-menu/admin-menu.component';
 import { CategoriasComponent } from './pages/administrador/categorias/categorias.component';
-
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetCodeComponent } from './pages/reset-code/reset-code.component';
+import { NewPasswordComponent } from './pages/new-password/new-password.component';
 const routes: Routes = [
   {
     path: 'administrador/:id',
@@ -31,6 +33,9 @@ const routes: Routes = [
   },
   { path: 'carrito', component: CarritoComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'reset-code', component: ResetCodeComponent},
+  { path: 'new-password', component: NewPasswordComponent},
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '/' },
 ];

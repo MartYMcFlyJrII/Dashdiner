@@ -193,4 +193,9 @@ export class GlobalService {
     sessionStorage.removeItem('usuario');
     
   }
+
+  public forgotPassword(correo: string): Observable<any> {
+    return this.http.post(`${API_URL}/forgot-password`, { correo });
+}
+
 }
