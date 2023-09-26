@@ -25,6 +25,8 @@ export class ForgotPasswordComponent implements OnInit{
         console.log(response.codigoboolean);
         if(response.codigoboolean){
           alert("Se ha enviado un correo con su nueva contraseña");
+          sessionStorage.setItem('reset_code', JSON.stringify(response));
+          this.forgotPasswordForm.reset();
           this.router.navigateByUrl('/reset-code');
         }
         else{

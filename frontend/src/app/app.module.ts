@@ -48,6 +48,8 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetCodeComponent } from './pages/reset-code/reset-code.component';
 import { NewPasswordComponent } from './pages/new-password/new-password.component';
+import { FourDigitInputDirective } from './pages/reset-code/four-digit-input.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +80,8 @@ import { NewPasswordComponent } from './pages/new-password/new-password.componen
     ForgotPasswordComponent,
     ResetCodeComponent,
     NewPasswordComponent,
+    FourDigitInputDirective,
+    NewPasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +104,7 @@ import { NewPasswordComponent } from './pages/new-password/new-password.componen
     MatButtonToggleModule,
     MatSelectModule,
     NgbCarouselModule,
+    ReactiveFormsModule,
   ],
 
   providers: [GlobalService],

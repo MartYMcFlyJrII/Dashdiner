@@ -213,6 +213,9 @@ export class GlobalService {
 
   public forgotPassword(correo: string): Observable<any> {
     return this.http.post(`${API_URL}/forgot-password`, { correo });
-}
+  }
+  public resetPassword(correo: string, new_password: string): Observable<any> {
+    return this.http.post(`${API_URL}/new_password`, { correo, new_password });
+  }
 
 }

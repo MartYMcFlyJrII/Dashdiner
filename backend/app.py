@@ -109,6 +109,23 @@ def forgot_password():
     else:
         return jsonify({'mensaje': 'Correo no registrado con este correo', 'codigoboolean': False})
 
+@app.route("/new_password", methods=['POST'])
+def guardar_password():
+    data=request.get_json()
+    correo=data.get('correo')
+    new_password = data.get('new_password')
+    print('Correo Electrónico:', correo)
+    print('Contraseña:', new_password)
+    usuario_existente = Usuario.query.filter_by(correo=correo).first()
+    if usuario_existente:
+        print('Usuario encontrado')
+        usuario_existente.password = new_password
+
+        # Confirmar la actualización en la base de datos
+        db.session.commit()
+        return jsonify({'mensaje':'La opción se actualizo correctamente'})
+    else:
+        return jsonify({'mensaje':'El usuario no existe'})
 
 @app.route('/producto', methods = ['POST', 'PUT'])
 def guardar_producto():

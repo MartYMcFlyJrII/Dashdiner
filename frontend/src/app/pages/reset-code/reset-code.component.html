@@ -1,1 +1,19 @@
-<p>reset-code works!</p>
+<div class="resetcode-container">
+    <img src="/assets/logo.png" alt="" style="height: 60px; width: 60px; margin-bottom: 21px;">
+    <p class="title">DashDiner</p>
+    <div class="separator"></div>
+    <h5 class="reset_code">Reset code</h5>
+    <p class="welcome-message">Ingrese el código recibido a su correo electrónico</p>
+    <form class="resetcode-form" [formGroup]="resetCodeForm">
+        <div class="form-control">
+            <input formControlName="code" class="form-control" type="text" id="code" appFourDigitInput>
+            <div *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger">
+              <div *ngIf="code.errors?.['required']">Reset Code is required</div>
+              <div *ngIf="code.errors?.['pattern']">Reset Code must be a 4-digit number</div>
+            </div>      
+            <i class="fas fa-user"></i>
+        
+      </div>
+      <button (click)="resetCode()" class="submit" type="submit" name="enviar" value="Enviar">Enviar</button>
+    </form>
+  </div>

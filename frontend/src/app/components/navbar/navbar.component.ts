@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
     // Realiza el proceso de logout aquí, por ejemplo, limpiando la sesión o el token
     // Luego, redirige al usuario a la página de inicio de sesión
     this.globalService.logout();
-
+    
 
     // Redirige al usuario a la página de inicio de sesión (ajusta la ruta según tu configuración)
     this.router.navigateByUrl('/login');
