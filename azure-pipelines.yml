@@ -1,0 +1,35 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: PushToDockerRegistries
+  jobs:
+  - job: PushImages
+    steps:
+    # Construir imágenes usando docker-compose
+    - script: docker-compose build
+      displayName: 'Build Docker Images with Compose'
+
+    # Autenticar y hacer push al primer registro
+    - script: |
+        docker login -u $(dockerRegistry1.username) -p $(dockerRegistry1.password $(dockerRegistry1.url))
+        docker-compose push 
+      displayName: 'Push to Registry 1'
+      env:
+        dockerRegistry1.username: '$(DOCKER_REGISTRY_USERNAME)'
+        dockerRegistry1.password: '$(DOCKER_REGISTRY_PASSWORD)'
+        dockerRegistry1.url: $(DOCKER_REGISTRY_BACKEND_URL)
+    # Autenticar y hacer push al segundo registro
+    - script: |
+        docker login -u $(dockerRegistry2.username) -p $(dockerRegistry2.password $(dockerRegistry.url))
+        docker-compose push 
+      displayName: 'Push to Registry 2'
+      env:
+        dockerRegistry2.username: '$(DOCKER_REGISTRY_USERNAME)'
+        dockerRegistry2.password: '$(DOCKER_REGISTRY_PASSWORD)'
+        dockerRegistry2.url: $(DOCKER_REGISTRY_FRONTEND_URL)
+
+

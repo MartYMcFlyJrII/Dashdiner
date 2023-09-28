@@ -59,7 +59,7 @@ export class AdminMenuComponent {
         tipoProducto: true,
         formGroup: this.buildr.group({
           id: this.buildr.control(0),
-          id_restaurante: this.buildr.control(0),
+          id_restaurante: this.restaurante.id,
           id_categoria: [null, Validators.required],
           nombre: [null, Validators.required],
           descripcion: [null, Validators.required],

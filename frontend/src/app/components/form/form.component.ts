@@ -31,7 +31,7 @@ export class FormComponent {
     tipo: 'success',
     contenido: 'Los cambios se han cambiado de manera exitosa.',
   };
-  url = '/assets/placeholder.png';
+  url = { type: 'image/png', url: '/assets/placeholder.png', blob: '' };
   newOption: string = ''; // To store the user-entered new option
 
   constructor(
@@ -55,14 +55,17 @@ export class FormComponent {
   }
 
   onSelectFile(e: any) {
-    if (e.target.files) {
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
-        console.log(this.url);
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = (event: any) => {
+      this.url = {
+        type: e.target.files[0].type,
+        url: event.target.result,
+        blob: event.target.result.split(',')[1],
       };
-    }
+      this.form.patchValue({ imagen: this.url });
+      console.log(this.url);
+    };
   }
 
   createOpcionFields(): FormGroup {
@@ -120,7 +123,7 @@ export class FormComponent {
   recibirInformacionProducto(code: number) {
     this.service.getProducto(code).subscribe((result) => {
       this.producto = result;
-      this.url = this.producto.imagen;
+      this.url = { type: 'image/png', url: this.producto.imagen, blob: '' };
       this.recibirInformacionOpciones(this.producto.id);
       this.form.patchValue({
         id: this.producto.id,
@@ -137,9 +140,6 @@ export class FormComponent {
 
     console.log(this.form);
   }
-
-  agregarOpcion() {}
-
   closeModal(success = false) {
     var msg = success ? this.closemessage : '';
     this.ref.close(msg);

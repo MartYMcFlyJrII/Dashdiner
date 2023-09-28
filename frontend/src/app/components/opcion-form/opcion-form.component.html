@@ -1,15 +1,15 @@
 <form [formGroup]="opcionGroup" class=" px-6 py-4 overflow-y-auto">
   <h1 class="text-xl font-bold text-orange-600 mb-2">{{title}}</h1>
   <div class="flex gap-5 ">
-    <mat-form-field class="w-full ">
+    <mat-form-field appearance="outline" class="w-full border-none">
       <mat-label>Nombre de la opción</mat-label>
       <input required="true" matInput placeholder="" formControlName="titulo">
     </mat-form-field>
   </div>
 
-  <mat-form-field class="w-full">
+  <mat-form-field appearance="outline" class="w-full border-none">
     <mat-label>Tipo de selección</mat-label>
-    <mat-select formControlName="multiple">
+    <mat-select formControlName="multiple" class="border-none">
       <mat-option [value]="true">
         Múltiple
       </mat-option>
@@ -31,20 +31,20 @@
 
 
     <div *ngFor="let seleccion of seleccionGroup.controls; let i = index"
-      class="flex gap-2 justify-between items-center">
+      class="flex gap-3 justify-between items-center my-3">
       <button [ngClass]="{'text-white pointer-events-none	': i == 0}"
         (click)="eliminarSeleccion(i,seleccion.get('id')?.value)" mat-icon-button><mat-icon
           [ngClass]="{'text-white pointer-events-none	': i == 0}"
           class="text-orange-600 ">remove_circle_outline</mat-icon></button>
-      <mat-form-field class="min-w-fit -mb-[1.25em]">
+      <mat-form-field appearance="outline" class="border-none min-w-fit -mb-[1.25em]">
         <mat-label>Nombre de selección</mat-label>
         <input required="true" matInput placeholder="" [formControl]="getControl(i,'nombre')">
       </mat-form-field>
-      <mat-form-field class="max-w-fit -mb-[1.25em]">
+      <mat-form-field appearance="outline" class="border-none min-w-fit -mb-[1.25em]">
         <mat-label>Precio extra</mat-label>
         <input required="true" matInput placeholder="" [formControl]="getControl(i,'precio')">
       </mat-form-field>
-      <mat-slide-toggle [formControl]="getControl(i,'estado')" color="primary"></mat-slide-toggle>
+      <mat-slide-toggle [formControl]="getControl(i,'estado')" color="primary" class="border-none"></mat-slide-toggle>
 
     </div>
   </div>

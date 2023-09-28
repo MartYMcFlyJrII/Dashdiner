@@ -1,7 +1,7 @@
 <form [formGroup]="this.form" (ngSubmit)="guardar()" class="py-8 px-4 xl:px-12 max-h-[80vh] overflow-y-auto">
   <div class="flex justify-between mb-2">
     <h1 class="text-2xl font-bold text-orange-600">{{datos.title}}</h1>
-    <button mat-raised-button (click)="agregarOpcion()" color="primary"
+    <button mat-raised-button color="primary" type="button"
       class="text-sm text-white rounded-lg py-5 items-center min-w-fit hidden lg:flex" (click)="openModal(0)">Agregar
       opción<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>
 
@@ -11,7 +11,7 @@
   <div class="flex flex-col lg:flex-row gap-2 xl:gap-8 ">
     <div class="flex flex-col px-8 md:px-24 lg:px-0">
 
-      <img [src]="url" class="xl:max-w-[350px] max-w-[300px] rounded-xl self-center" />
+      <img [src]="url.url" class="xl:max-w-[350px] max-w-[300px] rounded-xl self-center" />
 
 
       <label for="files"
@@ -19,22 +19,22 @@
         imagen</label>
       <input id=files type="file" (change)="onSelectFile($event)" class="hidden" placeholder="Seleccione la imagen"
         accept="image/*" />
-      <mat-form-field class="w-full">
+      <mat-form-field appearance="outline" class="w-full border-none">
         <mat-label>Nombre de producto</mat-label>
         <input required="true" matInput placeholder="" formControlName="nombre">
       </mat-form-field>
-      <mat-form-field class="w-full">
+      <mat-form-field appearance="outline" class="w-full border-none">
         <mat-label>Precio</mat-label>
         <input required="true" matInput placeholder="" formControlName="precio">
       </mat-form-field>
-      <mat-form-field class="w-full">
+      <mat-form-field appearance="outline" class="w-full border-none">
         <mat-label>Descripcion</mat-label>
         <textarea required="true" matInput placeholder="" formControlName="descripcion"></textarea>
       </mat-form-field>
 
-      <mat-form-field class="w-full">
+      <mat-form-field appearance="outline" class="w-full border-none">
         <mat-label>Categoría</mat-label>
-        <mat-select formControlName="id_categoria" [(ngModel)]="selectedOption">
+        <mat-select formControlName="id_categoria" class="border-none">
           <mat-option [value]="c.id" *ngFor="let c of categorias">
             {{c.nombre}}
           </mat-option>
@@ -43,19 +43,19 @@
 
       <div class="flex items-center justify-between mb-2">
         <mat-label class="text-gray-700">¿El producto está activo?</mat-label>
-        <mat-slide-toggle formControlName="estado" color="primary"></mat-slide-toggle>
+        <mat-slide-toggle formControlName="estado" color="primary" class="border-none"></mat-slide-toggle>
 
       </div>
       <div class="flex items-center justify-between">
         <mat-label class="text-gray-700">¿El producto es una promoción?</mat-label>
-        <mat-slide-toggle formControlName="promocion" color="primary"></mat-slide-toggle>
+        <mat-slide-toggle formControlName="promocion" color="primary" class="border-none"></mat-slide-toggle>
 
       </div>
     </div>
 
     <mat-divider class="lg:hidden lg:my-0 my-4"></mat-divider>
     <div class="flex flex-col lg:max-h-full w-full lg:overflow-y-auto xl:px-10 px-4 gap-6 ">
-      <button mat-raised-button (click)="agregarOpcion()" color="primary"
+      <button mat-raised-button color="primary" type="button"
         class="text-sm text-white rounded-lg py-5 items-center max-w-fit self-end m-0 lg:hidden"
         (click)="openModal(0)">Agregar
         opción<mat-icon iconPositionEnd>add_circle_outline</mat-icon></button>

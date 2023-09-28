@@ -1,6 +1,37 @@
 import smtplib,ssl
 from email.message import EmailMessage
+from azure.storage.blob import BlobServiceClient,generate_blob_sas,BlobSasPermissions, ContentSettings
+from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+account_name =os.environ.get('AZURE_PORTAL_ACC')
+account_key = os.environ.get('AZURE_KEY')
+container = os.environ.get('AZURE_CONTAINER')
+connect_str = 'DefaultEndpointsProtocol=https;AccountName=' + account_name + ';AccountKey=' + account_key + ';EndpointSuffix=core.windows.net'
+
+def subir_imagen(file, file_name:str):
+    import base64
+    binary_data = base64.b64decode(file['blob'])
+    my_content_settings = ContentSettings(content_type=file['type'])
+    service = BlobServiceClient.from_connection_string(connect_str)
+    blob_client = service.get_container_client(container=container)
+    blob_client.upload_blob(name=file_name,data=binary_data,content_settings=my_content_settings,overwrite=True)
+
+def get_url_imagen(blob_name):
+
+
+    sas_blob = generate_blob_sas(account_name=account_name, 
+                                container_name=container,
+                                blob_name=blob_name,
+                                account_key=account_key,
+                                permission=BlobSasPermissions(read=True),
+                                expiry=datetime.utcnow() + timedelta(days=5))
+    print('SASSS BLOBL',sas_blob)
+    print('https://'+account_name+'.blob.core.windows.net/'+container+'/'+blob_name+'?'+sas_blob)
+    url = 'https://'+account_name+'.blob.core.windows.net/'+container+'/'+blob_name+'?'+sas_blob
+    return url
 def mandar_correo_codigo(sender, receiver, password, codigo, tipo):
     if tipo=='password':
         email_subject = 'Código de Cambio de Contraseña'
