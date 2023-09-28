@@ -1,5 +1,6 @@
 <div *ngIf="categoria;else gridImagen">
-  <div class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 px-12 lg:px-4 gap-5   ">
+  <div
+    class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 px-12 lg:px-4 gap-5 pt-6   ">
     <div class="flex flex-1 " *ngFor="let item of items; let i = index">
       <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white ">
         <mat-card-content class="p-5 w-full">
@@ -19,9 +20,9 @@
     </div>
   </div>
 </div>
-<ng-template #gridImagen class="pt-6">
+<ng-template #gridImagen>
   <div
-    class="grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 lg:px-4 gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8   ">
+    class="pt-6 grid same-height grid-cols-1 place-content-center	sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 px-12 lg:px-4 gap-4 lg:gap-x-8 lg:gap-y-16 gap-y-8   ">
     <div class="flex flex-1 " *ngFor="let item of items">
       <div class="grow relative shadow-xl rounded-3xl flex flex-col items-start justify-center bg-white "
         [ngClass]="{'bg-gray-200': !item.estado, 'z-depth':!editable && !restaurante,'active': !editable && !restaurante && itemSeleccionado && itemSeleccionado.id === item.id}"

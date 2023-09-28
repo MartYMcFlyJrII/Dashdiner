@@ -10,7 +10,7 @@ import { GlobalService } from 'src/app/services/global.service'; // Ajusta la ru
 })
 export class RegistroRestauranteComponent {
   part2: boolean = false;
-  url = '/assets/placeholder.png';
+  url = { type: 'image/png', url: '/assets/placeholder.png', blob: '' };
   registroForm = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     username: ['', [Validators.required]],
@@ -38,7 +38,11 @@ export class RegistroRestauranteComponent {
       var reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (event: any) => {
-        this.url = event.target.result;
+        this.url = {
+          type: e.target.files[0].type,
+          url: event.target.result,
+          blob: event.target.result.split(',')[1],
+        };
         console.log(this.url);
       };
     }
@@ -68,6 +72,7 @@ export class RegistroRestauranteComponent {
             this.registroForm.controls.descripcion.value || '';
           const horario = this.registroForm.controls.horario.value || '';
           const direccion = this.registroForm.controls.direccion.value || '';
+
           //const logo = this.registroForm.controls.logo.value || '';
           //se verifica que las contraseñas coincidan
           if (password == password2) {
@@ -82,7 +87,6 @@ export class RegistroRestauranteComponent {
               rfc: rfc,
               tipo: 'admin',
             };
-
             const Restaurante = {
               nombre: nombreRest,
               descripcion: descripcion,

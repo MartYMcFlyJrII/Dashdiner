@@ -7,11 +7,11 @@ name = "pypi"
 flask = "*"
 flask-cors = "*"
 flask-sqlalchemy = "*"
-pymysql = "*"
 requests = "*"
 pymysql = "*"
 python-dotenv = "*"
 passlib = "*"
+azure-storage-blob = "*"
 
 [dev-packages]
 

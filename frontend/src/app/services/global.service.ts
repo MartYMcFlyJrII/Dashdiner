@@ -129,6 +129,7 @@ export class GlobalService {
   // public registro(usuario: any): Observable<any> {
   //   return this.http.post<any>(`${API_URL}/registro/${usuario.tipo}`, usuario);
   // }
+
   public registro(usuario: any, restaurante?: any): Observable<any> {
     return this.http.post<any>(`${API_URL}/registro`, {
       usuario: usuario,
@@ -167,7 +168,7 @@ export class GlobalService {
           };
           // Guardar datos en sessionStorage
 
-          this.UserData.next(usuario);
+          this.UserData.next({ ...this.UserData.value, ...usuario });
         }
         return response; // O bien, podrías devolver el objeto 'Usuario' aquí si lo necesitas en el componente
       }),
@@ -181,6 +182,9 @@ export class GlobalService {
     return this.UserData.asObservable();
   }
 
+  public getUser(): Usuario {
+    return this.UserData.value;
+  }
   public setUsuario(response: any): void {
     if (response.logeado) {
       const usuario: Usuario = {

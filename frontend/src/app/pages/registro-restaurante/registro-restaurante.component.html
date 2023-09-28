@@ -118,13 +118,13 @@
               </div>
             </div>
             <div class="mt-4 flex flex-col items-center">
-              <img [src]="url"
+              <img [src]="url.url"
                 class="w-[170px] h-[170px]  md:w-[200px] md:h-[200px] border-2 border-orange-600 rounded-full object-fill	 self-center" />
 
-              <label for="files " class="cursor-pointer self-center my-4 bg-white hover:bg-orange-50 border border-gray-300
+              <label for="files" class="cursor-pointer self-center my-4 bg-white hover:bg-orange-50 border border-gray-300
                 text-orange-600 py-2 px-4 rounded-xl max-w-fit">Seleccionar
                 imagen</label>
-              <input id=files type="file" (change)="onSelectFile($event)" class="hidden"
+              <input id="files" type="file" (change)="onSelectFile($event)" class="hidden"
                 placeholder="Seleccione la imagen" accept="image/*" />
             </div>
           </div>

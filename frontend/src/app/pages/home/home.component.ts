@@ -10,7 +10,7 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class HomeComponent {
   restaurantes: Restaurante[] = [];
-  constructor(private service: GlobalService, private router:Router) {}
+  constructor(private service: GlobalService, private router: Router) {}
 
   ngOnInit() {
     this.loadItems();

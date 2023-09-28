@@ -4,10 +4,15 @@ from flask_cors import CORS
 from database import Opcion, Producto, Restaurante, Seleccion_disponible, Usuario, Categoria, TipoUsuario
 from database import db
 from sqlalchemy.orm import joinedload
+from dotenv import load_dotenv
+
 from funciones import *
+import os
 
 app = Flask(__name__)
-app.secret_key = 'tostitosconquesotostitosconyogurt'
+app.secret_key = os.environ.get('SECRET_KEY')
+
+
 CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/dashdiner'
 
@@ -68,6 +73,9 @@ def registrar_usuario():
     if request.method == 'POST':
         data = request.get_json()['usuario']
         rest = request.get_json()['restaurante']
+
+        subir_imagen(rest['logo'],rest['nombre']+'_logo.png')
+        url = get_url_imagen(rest['nombre']+'_logo.png')
         usuario = Usuario(
         nombre_usuario=data['nombre_usuario'],
         correo=data['correo'],
@@ -81,7 +89,7 @@ def registrar_usuario():
         db.session.add(usuario)
         db.session.commit()
         
-        restaurante = Restaurante(id_usuario=usuario.id,nombre=rest['nombre'],logo=rest['logo'],direccion=rest['direccion'],horario=rest['horario'],celular=rest['celular'],descripcion=rest['descripcion'])
+        restaurante = Restaurante(id_usuario=usuario.id,nombre=rest['nombre'],logo=url,direccion=rest['direccion'],horario=rest['horario'],celular=rest['celular'],descripcion=rest['descripcion'])
         db.session.add(restaurante)
         db.session.commit()
         return jsonify({'mensaje':'El restaurante se registro correctamente','registrado':True}),200
@@ -135,13 +143,16 @@ def guardar_password():
 def guardar_producto():
     if request.method == 'POST':
         data = request.get_json()
+        filename = str(data['id_restaurante'])+'_'+data['nombre']+'_producto.png'
+        subir_imagen(data['imagen'],filename)
+        url = get_url_imagen(filename)
         producto = Producto(
     id_restaurante=data['id_restaurante'],
     id_categoria=data['id_categoria'],
     descripcion=data['descripcion'],
     nombre=data['nombre'],
     precio=data['precio'],
-    imagen=data['imagen'],
+    imagen=url,
     estado=data['estado'],
     promocion=data['promocion']
 )
@@ -327,7 +338,9 @@ def get_restaurante_by_id(id):
 @app.route('/restaurante_admin/<int:id_administrador>', methods=['GET'])
 def get_restaurante_admin(id_administrador):
     restaurante = db.session.execute(db.select(Restaurante).where(Restaurante.id_usuario == id_administrador)).first()
+    
     restaurante = convertir_a_dict(restaurante[0])
+    print(restaurante)
     return jsonify(restaurante)
 
 @app.route('/menu/<int:id_restaurante>', methods=['GET'])
@@ -444,6 +457,8 @@ def convertir_a_dict(resultado):
 
 def main():
     db.init_app(app)
+    load_dotenv()
+
     
     # antes de correr la aplicacion, se debe crear la base de datos
     # correr el comando en mysql:
