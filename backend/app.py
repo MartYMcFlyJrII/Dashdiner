@@ -66,8 +66,8 @@ def existingEmail():
 def registrar_usuario():
     print("Entra al metodo registroAdmin")
     if request.method == 'POST':
-        print("Entra al metodo POST de registroAdmin")
-        data = request.get_json()
+        data = request.get_json()['usuario']
+        rest = request.get_json()['restaurante']
         usuario = Usuario(
         nombre_usuario=data['nombre_usuario'],
         correo=data['correo'],
@@ -79,6 +79,10 @@ def registrar_usuario():
         tipo=data['tipo']
         )
         db.session.add(usuario)
+        db.session.commit()
+        
+        restaurante = Restaurante(id_usuario=usuario.id,nombre=rest['nombre'],logo=rest['logo'],direccion=rest['direccion'],horario=rest['horario'],celular=rest['celular'],descripcion=rest['descripcion'])
+        db.session.add(restaurante)
         db.session.commit()
         return jsonify({'mensaje':'El restaurante se registro correctamente','registrado':True}),200
     else:

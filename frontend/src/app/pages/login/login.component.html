@@ -1,82 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.component.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <title>Sign In</title>
-</head>
-<body style="margin: 0; background-color: rgb(255, 250, 247);">
-    <div class="sign-in-container">
-        <div class="sign-in-contents">
-            <div class="dd-logo-container">
-                <img cImg src="assets/logo.png" class="dd-logo">
-            </div>
-            <div class="sign-in-legend-container">
-                <div class="sign-in-legend-title">Sign In</div>
-                <div class="sign-in-legend-subtitle">Sign in to stay connected.</div>
-            </div>
-            <div class="sign-in-email-container">
-                <form [formGroup]="loginForm">
-                    <label for="email">Email</label>
-                    <input formControlName="email" class="form-control" type="email" id="email"> 
-                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
-                        <div *ngIf="email.errors?.['required']">Email is required</div>
-                        <div *ngIf="email.errors?.['email']">Email is invalid</div>
-                    </div>              
-                    <label for="pass">Password</label>
-                    <input formControlName="password" class="form-control" type="password" id="password">
-                    <div *ngIf="password.invalid && (password.dirty || password.touched)">
-                        <div *ngIf="password.errors?.['required']">Password is required</div>
-                    </div>
+<div class="m-0 flex bg-[rgb(255, 250, 247)] h-full">
+  <div class="absolute  w-full h-full z-[-1]">
+    <img cImg src="assets/Login/vector_1.png" class="absolute    top-28 right-0">
+    <img cImg src="assets/Login/vector_2.png" class="absolute    top-28 right-0">
+    <img cImg src="assets/Login/elipse_3.png"
+      class="hidden lg:block lg:absolute -top-4 right-0 w-[650px] h-[650px] xl:w-[850px] xl:h-[800px]">
+    <img cImg src="assets/Login/elipse_1.png" class="absolute    bottom-0 right-0">
 
-                </form>
-            </div>
-           
-            <div class="sign-in-footer">
-                <div class="sign-in-rembemberme">
-                    <form>
-                        <input type="checkbox" value="lsRememberMe" id="rememberMe"> <label for="rememberMe" id="rememberMeLabel">Remember me</label>
-                    </form>
-                </div>
-                <div class="sign-in-forgot-pass">
-                    <form (click)="redirectToForgot_password()">
-                        Forgot Password
-                    </form>
-                </div>
-            </div>
-            <div class="sign-in-button-container">
-                <button class="sign-in-button" (click)="login()">Sign In</button>
-            </div>
-            <div class="sign-in-other-acc-container">
-                <div class="sign-in-other-acc-title">or sign in with other accounts?</div>
-                <div class="sign-in-other-acc-some">
-                    <div class="sign-in-google-container">
-                        <img cImg src="assets/google-icon.webp" class="sign-in-google">
-                    </div>
-                    <div class="sign-in-facebook-container">
-                        <img cImg src="assets/facebook-icon.png" class="sign-in-facebook">
-                    </div>
-                    <div class="sign-in-instagram-container">
-                        <img cImg src="assets/instagram-icon.webp" class="sign-in-instagram">
-                    </div>
-                    <div class="sign-in-linkedin-container">
-                        <img cImg src="assets/linkedin-icon.webp" class="sign-in-linkedin">
-                    </div>
-                </div>
-            </div>
-            <div class="sign-in-create-acc-container">
-                <div class="sign-in-noacc-title">Don't have an account?</div>
-                <div class="sign-in-sign-up" (click)="redirectToRegistration()">Click here to sign up.</div>
-            </div>
-        </div>
-        <div class="promo-image-container">
-            <img cImg src="assets/promo-image.png" class="promo-image">
-            <img cImg src="assets/icons/elipse.png" class="promo-image-elipse">
-        </div>
+
+    <img cImg src="assets/Login/elipse_2.png" class="absolute bottom-0">
+    <img cImg src="assets/Login/promo-image.png"
+      class="hidden lg:block lg:absolute bottom-48 xl:bottom-24 right-6 xl:right-12 w-[550px] xl:w-[700px]">
+    <img cImg src="assets/Login/plate.png"
+      class="hidden lg:block lg:absolute bottom-28 xl:bottom-6 right-80 xl:right-96 w-[250px] xl:w-[300px]">
+  </div>
+  <div
+    class="text-gray-500 px-10 xl:px-24 text-sm grid self-center gap-4 grow justify-center items-center lg:justify-start">
+    <app-logo></app-logo>
+    <div class="grid justify-center text-center gap-3 mt-6 mb-3">
+      <div class="text-black text-3xl font-bold">Inicia sesión</div>
+      <div class="">Inicia sesión para acceder a más funciones.</div>
     </div>
-</body>
-</html>
+    <div class="px-8 ">
+      <form [formGroup]="loginForm" class="mb-5">
+        <label for="email">Email</label>
+        <input formControlName="email" class="rounded-3xl border-2 border-orange-600 block my-2 py-1 px-3 w-full"
+          type="email">
+        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-red-400">
+          <div *ngIf="email.errors?.['required']">El correo es obligatorio</div>
+          <div *ngIf="email.errors?.['email']">El correo es inválido</div>
+        </div>
+        <label for="pass">Password</label>
+        <input formControlName="password" class="rounded-3xl border-2 border-orange-600 block my-2 py-1 px-3 w-full"
+          type="password">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-red-400">
+          <div *ngIf="password.errors?.['required']">La contraseña es obligatoria</div>
+        </div>
+        <div class="flex justify-between my-6">
+          <div class="flex">
+            <input type="checkbox" value="lsRememberMe" class="mr-1"> <label for="rememberMe">Recuérdame</label>
+          </div>
+          <a class="text-orange-600 cursor-pointer" (click)="redirectToForgot_password()">
+            Olvidar Contraseña
+          </a>
+        </div>
+        <div class="flex justify-center">
+          <button mat-flat-button class="text-white w-fit px-12 rounded-2xl self-center" color="primary"
+            (click)="login()">Inicar sesión</button>
+        </div>
+      </form>
+
+    </div>
+
+
+
+
+    <!-- <div class="grid justify-center">
+      <div class="text-black">o inicia sesión con otras cuentas</div>
+      <div class="flex mt-4 justify-center">
+        <div class="mx-2">
+          <img cImg src="assets/google-icon.webp" class="w-[20px]">
+        </div>
+        <div class="mx-2">
+          <img cImg src="assets/facebook-icon.png" class="w-[20px]">
+        </div>
+        <div class="mx-2">
+          <img cImg src="assets/instagram-icon.webp" class="w-[20px]">
+        </div>
+        <div class="mx-2">
+          <img cImg src="assets/linkedin-icon.webp" class="w-[20px]">
+        </div>
+      </div>
+    </div> -->
+    <div class="flex justify-center">
+      <div class="text-black">¿No tienes una cuenta?</div>
+      <div class="cursor-pointer text-[#f48908] ml-1" (click)="redirectToRegistration()">Haz click aquí para
+        registrarte.</div>
+    </div>
+  </div>
+
+</div>

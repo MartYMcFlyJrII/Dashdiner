@@ -12,15 +12,25 @@ import { Usuario } from '../models/usuario';
 import { BehaviorSubject, map } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class GlobalService {
   //logeado: BehaviorSubject<boolean>=new BehaviorSubject<boolean>(false);
   logeado = false;
-  UserData: BehaviorSubject<Usuario>=new BehaviorSubject<Usuario>({id:0,nombre_usuario:'',correo:'',celular:'',nombre:'',apellido:'',tipo:'',rfc:'',mensaje:'',logeado:false});
-  
+  UserData: BehaviorSubject<Usuario> = new BehaviorSubject<Usuario>({
+    id: 0,
+    nombre_usuario: '',
+    correo: '',
+    celular: '',
+    nombre: '',
+    apellido: '',
+    tipo: '',
+    rfc: '',
+    mensaje: '',
+    logeado: false,
+  });
+
   constructor(private http: HttpClient) {}
 
   public getAllRestaurantes(): Observable<Restaurante[]> {
@@ -110,7 +120,7 @@ export class GlobalService {
 
   //esto sirve para verificar si el correo ya existe en la base de datos y no se pueda registrar
   public existingEmail(correo: string): Observable<any> {
-    const body = { correo: correo};
+    const body = { correo: correo };
     // Realiza una solicitud HTTP POST al servidor con el objeto JSON
     return this.http.post<any>(`${API_URL}/existingEmail`, body);
   }
@@ -119,12 +129,12 @@ export class GlobalService {
   // public registro(usuario: any): Observable<any> {
   //   return this.http.post<any>(`${API_URL}/registro/${usuario.tipo}`, usuario);
   // }
-  public registro(usuario: any): Observable<any> {
-       return this.http.post<any>(`${API_URL}/registro`, usuario);
-     }
-  
-  
-
+  public registro(usuario: any, restaurante?: any): Observable<any> {
+    return this.http.post<any>(`${API_URL}/registro`, {
+      usuario: usuario,
+      restaurante: restaurante,
+    });
+  }
   public getRestauranteAdmin(
     id_administrador: number
   ): Observable<Restaurante> {
@@ -138,7 +148,7 @@ export class GlobalService {
 
   public login(correo: string, password: string): Observable<Usuario> {
     const body = { correo: correo, password: password };
-  
+
     // Realiza una solicitud HTTP POST al servidor con el objeto JSON
     return this.http.post<any>(`${API_URL}/login`, body).pipe(
       map((response: any) => {
@@ -156,7 +166,6 @@ export class GlobalService {
             logeado: true,
           };
           // Guardar datos en sessionStorage
-          
 
           this.UserData.next(usuario);
         }
@@ -167,12 +176,11 @@ export class GlobalService {
       })
     );
   }
-  
 
-  public get User_Data():Observable<Usuario>{
+  public get User_Data(): Observable<Usuario> {
     return this.UserData.asObservable();
   }
-  
+
   public setUsuario(response: any): void {
     if (response.logeado) {
       const usuario: Usuario = {
@@ -187,17 +195,16 @@ export class GlobalService {
         mensaje: response.mensaje,
         logeado: true,
       };
-  
+
       // Guardar datos en sessionStorage
       sessionStorage.setItem('usuario', JSON.stringify(usuario));
-  
+
       this.UserData.next(usuario);
     }
   }
-  
 
-  setLogeado(value:boolean){
-    this.logeado=value;
+  setLogeado(value: boolean) {
+    this.logeado = value;
   }
 
   logout() {
@@ -208,7 +215,6 @@ export class GlobalService {
     this.logeado = false;
     this.UserData.next; // Borra los datos del usuario
     sessionStorage.removeItem('usuario');
-    
   }
 
   public forgotPassword(correo: string): Observable<any> {
@@ -217,5 +223,4 @@ export class GlobalService {
   public resetPassword(correo: string, new_password: string): Observable<any> {
     return this.http.post(`${API_URL}/new_password`, { correo, new_password });
   }
-
 }
